@@ -1,0 +1,30 @@
+name: Test Traceable AST Init Action And Traceable AST Run Action
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  AstScan:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init Scan Action
+        uses: ./traceable-ast-init
+        with:
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          traffic_env: 'samarth-crapi'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+      - name: Run a loop as functional test
+        run: |
+          for ((i=1;i<=100;i++)); 
+          do 
+             echo $i
+          done
+      - name: Run Scan Action
+        uses: ./traceable-ast-run
+        with:
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+
