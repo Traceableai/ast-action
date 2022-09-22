@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Init and Run Scan Action
+      - name: Init and run scan action
         uses: ./traceable-ast
         with:
           step_name: 'init and run'
