@@ -67,7 +67,7 @@ runs:
       run: |
         pip install ${GITHUB_WORKSPACE}/traceablecli-0.1.22-py3-none-linux_x86_64.whl --prefix=${GITHUB_WORKSPACE}
       shell: bash
-    - name: Init command on CLI
+    - name: Init command on cli
       id: init_scan
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast-init/init.sh

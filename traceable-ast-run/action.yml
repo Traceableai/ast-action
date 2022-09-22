@@ -17,7 +17,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Run command on CLI
+    - name: Run command on cli
       id: run_scan
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast-run/run.sh
@@ -27,7 +27,7 @@ runs:
         ${{ inputs.idle_timeout }} \
         ${{ inputs.max_retries }}
       shell: bash
-    - name: Publish Report Summary
+    - name: Publish report summary
       run: |
         ${GITHUB_WORKSPACE}/traceable/bin/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash

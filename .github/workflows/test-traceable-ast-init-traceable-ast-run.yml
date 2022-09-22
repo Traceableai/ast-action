@@ -12,8 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init Scan Action
-        uses: ./traceable-ast-init
+        uses: ./traceable-ast
         with:
+          step_name: 'init'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'samarth-crapi'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
@@ -24,7 +25,8 @@ jobs:
              echo $i
           done
       - name: Run Scan Action
-        uses: ./traceable-ast-run
+        uses: ./traceable-ast
         with:
+          step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-
+          traffic_env: 'samarth-crapi'
