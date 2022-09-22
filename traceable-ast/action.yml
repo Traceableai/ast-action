@@ -75,14 +75,14 @@ runs:
   steps:
     - name: checkout repo
       uses: actions/checkout@v3
-      if: ${{ ${{ inputs.step_name }} == 'init' || ${{ inputs.step_name }} == 'init and run' }}
+      if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
     - name: Download CLI
-      if: ${{ ${{ inputs.step_name }} == 'init' || ${{ inputs.step_name }} == 'init and run' }}
+      if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
         pip install ${GITHUB_WORKSPACE}/traceablecli-0.1.22-py3-none-linux_x86_64.whl --prefix=${GITHUB_WORKSPACE}
       shell: bash
     - name: Init and run command on cli
-      if: ${{ ${{ inputs.step_name }} == 'init and run' }}
+      if: ${{ inputs.step_name == 'init and run' }}
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh
         ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh \
@@ -104,7 +104,7 @@ runs:
         ${{ inputs.traceable_cli_key }}
       shell: bash
     - name: Init command on cli
-      if: ${{ ${{ inputs.step_name }} == 'init' }}
+      if: ${{ inputs.step_name == 'init' }}
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/init.sh
         ${GITHUB_WORKSPACE}/traceable-ast/init.sh \
@@ -125,7 +125,7 @@ runs:
       shell: bash
     - name: Run command on cli
       id: run_scan
-      if: ${{ ${{ inputs.step_name }} == 'run' }}
+      if: ${{ inputs.step_name == 'run' }}
       run: |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/run.sh
         ${GITHUB_WORKSPACE}/traceable-ast/run.sh \
@@ -135,7 +135,7 @@ runs:
         ${{ inputs.max_retries }}
       shell: bash
     - name: Publish report
-      if: ${{ ${{ inputs.step_name }} == 'run' }}
+      if: ${{ inputs.step_name == 'run' }}
       run: |
         ${GITHUB_WORKSPACE}/traceable/bin/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
