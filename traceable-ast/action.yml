@@ -135,7 +135,7 @@ runs:
         ${{ inputs.max_retries }}
       shell: bash
     - name: Publish report
-      if: ${{ inputs.step_name == 'run' }}
+      if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
       run: |
         ${GITHUB_WORKSPACE}/traceable/bin/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
