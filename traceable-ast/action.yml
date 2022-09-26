@@ -86,7 +86,6 @@ runs:
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
       run:  |
-        printenv
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh
         ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh \
         ${{ env.CLI_LOCATION }}/traceable \
