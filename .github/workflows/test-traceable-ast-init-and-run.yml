@@ -16,6 +16,7 @@ jobs:
         with:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          cli_version: '1.0.0-rc.3'
           traffic_env: 'samarth-crapi'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
   functionalTest:

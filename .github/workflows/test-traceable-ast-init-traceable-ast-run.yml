@@ -30,3 +30,4 @@ jobs:
           step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'samarth-crapi'
+          cli_version: '1.0.0-rc.3'
