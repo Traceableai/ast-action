@@ -9,3 +9,4 @@ then
   ls -la
 fi
 source ~/.bashrc
+printenv
