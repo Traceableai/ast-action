@@ -110,7 +110,7 @@ runs:
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/init.sh
         ${GITHUB_WORKSPACE}/traceable-ast/init.sh \
-        ${GITHUB_WORKSPACE}/traceable/bin/traceable \
+        ./traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
         ${{ inputs.client_scan_token }} \
@@ -131,7 +131,7 @@ runs:
       run: |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/run.sh
         ${GITHUB_WORKSPACE}/traceable-ast/run.sh \
-        ${GITHUB_WORKSPACE}/traceable/bin/traceable \
+        ./traceable \
         ${{ inputs.client_scan_token }} \
         ${{ inputs.idle_timeout }} \
         ${{ inputs.max_retries }}
@@ -139,6 +139,6 @@ runs:
     - name: Publish report
       if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
       run: |
-        ${GITHUB_WORKSPACE}/traceable/bin/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
+        ./traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
 
