@@ -89,7 +89,7 @@ runs:
         printenv
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh
         ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh \
-        $CLI_LOCATION/traceable \
+        ${{ env.CLI_LOCATION }}/traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
         ${{ inputs.client_scan_token }} \
