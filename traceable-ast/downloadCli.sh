@@ -8,4 +8,4 @@ if [[ ${1} = "latest" ]]
 then
   ls -la
 fi
-source .bashrc
+source ~/.bashrc
