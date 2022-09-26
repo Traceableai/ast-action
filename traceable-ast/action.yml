@@ -83,7 +83,7 @@ runs:
         then
           curl https://downloads.traceable.ai/\#cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz -o ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz 
           tar -xf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
-          echo "cli_location=${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64" >> GITHUB_ENV
+          echo "::set-env name=CLI_LOCATION::${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64"
         fi
         if [[ $inputs.cli_version == "latest" ]]
         then
@@ -95,7 +95,7 @@ runs:
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh
         ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh \
-        ${{ env.cli_location }}/traceable \
+        $CLI_LOCATION/traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
         ${{ inputs.client_scan_token }} \
