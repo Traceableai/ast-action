@@ -79,12 +79,12 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        if [[ {{ $inputs.cli_version }} == *"-rc."* ]] 
+        if [[ {{ $inputs.cli_version }} = *"-rc."* ]] 
         then
           curl https://downloads.traceable.ai/\#cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz -o ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz 
           tar -xf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
         fi
-        if [[ {{ $inputs.cli_version }} == "latest" ]]
+        if [[ {{ $inputs.cli_version }} = "latest" ]]
         then
           ls -la
         fi
