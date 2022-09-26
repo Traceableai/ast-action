@@ -79,17 +79,17 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        if [[ "$inputs.cli_version" == *"-rc."* ]]; then
-          curl https://downloads.traceable.ai/\#cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz -o traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz 
+        if [[ {{ $inputs.cli_version }} == *"-rc."* ]]; then
+          curl https://downloads.traceable.ai/\#cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz -o ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz 
         fi
-        pip install ${GITHUB_WORKSPACE}/traceablecli-0.1.22-py3-none-linux_x86_64.whl --prefix=${GITHUB_WORKSPACE}
+        tar -xf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
       run:  |
         chmod +x ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh
         ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh \
-        ${GITHUB_WORKSPACE}/traceable/bin/traceable \
+        ${GITHUB_WORKSPACE}/traceable-cli-*/traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
         ${{ inputs.client_scan_token }} \
