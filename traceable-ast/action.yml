@@ -79,18 +79,9 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        if [[ inputs.cli_version  = *"-rc."* ]]
-        then
-          echo "reached in first if condition"
-          curl https://downloads.traceable.ai/\#cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz -o ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz 
-          tar -xf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
-          echo "::set-env name=CLI_LOCATION::${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64"
-        fi
-        if [[ inputs.cli_version = "latest" ]]
-        then
-          ls -la
-        fi
-        echo "reached the end of run"
+        chmod +x ${GITHUB_WORKSPACE}/traceable-ast/downloadCli.sh
+        ${GITHUB_WORKSPACE}/traceable-ast/downloadCli.sh \
+        ${{ inputs.cli_version }}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
