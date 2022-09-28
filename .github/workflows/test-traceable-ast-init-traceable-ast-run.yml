@@ -32,7 +32,6 @@ jobs:
           traffic_env: 'samarth-crapi'
           cli_version: '1.0.0-rc.3'
       - name: Abort Scan
-        if: always()
         uses: ./traceable-ast
         with:
           step_name: 'stop'
