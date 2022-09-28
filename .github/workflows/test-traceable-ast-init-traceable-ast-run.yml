@@ -31,3 +31,11 @@ jobs:
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'samarth-crapi'
           cli_version: '1.0.0-rc.3'
+      - name: Abort Scan
+        if: always()
+        uses: ./traceable-ast
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
