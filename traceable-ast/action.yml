@@ -71,7 +71,7 @@ inputs:
     default: 'NULL'
 
 runs:
-  using: composite
+  using:
   steps:
     - name: checkout repo
       uses: actions/checkout@v3
@@ -140,10 +140,4 @@ runs:
       if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
       run: |
         ./traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
-      shell: bash
-  post:
-    - name: Abort Scan
-      if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
-      run: |
-        ./traceable ast scan stop
       shell: bash
