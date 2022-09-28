@@ -142,8 +142,7 @@ runs:
         ./traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
     - name: Abort Scan
-      if: always()
+      if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
       run: |
         ./traceable ast scan stop
       shell: bash
-
