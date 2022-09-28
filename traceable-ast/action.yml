@@ -71,7 +71,7 @@ inputs:
     default: 'NULL'
 
 runs:
-  using:
+  using: composite
   steps:
     - name: checkout repo
       uses: actions/checkout@v3
