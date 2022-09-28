@@ -5,10 +5,7 @@ then
 fi
 if [[ ${1} = "latest" ]]
 then
-  echo "entered latest"
-  curl https://s3.amazonaws.com/downloads.traceable.ai\?list-type=2\&delimiter=%2F\&prefix=cli%2Frc%2Flatest%2Ftars%2F
-  echo "aws curl complete"
-  tar_file="$( grep -z -o  'traceable-cli.*linux-x86_64.tar.gz' ${GITHUB_WORKSPACE}\latest.xml | sed 's/traceable-cli//' | grep -o 'traceable-cli.*' )"
+  tar_file="$( curl -s https://s3.amazonaws.com/downloads.traceable.ai\?list-type=2\&delimiter\=%2F\&prefix=cli%2Frc%2Flatest%2Ftars%2F |  grep -z -o  'traceable-cli.*linux-x86_64.tar.gz' | sed 's/traceable-cli//' | grep -o 'traceable-cli.*'  )"
   echo ${tar_file}
   echo "no tar file name"
   curl -OL https://downloads.traceable.ai/cli/rc/latest/tars/${tar_file}
