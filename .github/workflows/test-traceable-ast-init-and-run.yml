@@ -15,10 +15,10 @@ jobs:
         uses: ./traceable-ast
         with:
           step_name: 'init and run'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: '1.0.0-rc.3'
-          traffic_env: 'samarth-crapi'
-          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
