@@ -2,7 +2,7 @@ name: Test Traceable AST Init And Run Action
 on:
   push:
     branches:
-      - main
+      - crapi-demo
   pull_request:
   workflow_dispatch:
 
