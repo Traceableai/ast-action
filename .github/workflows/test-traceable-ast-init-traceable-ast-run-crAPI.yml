@@ -2,7 +2,7 @@ name: Test Traceable AST Init Action And Traceable AST Run Action
 on:
   push:
     branches:
-      - main
+      - crapi-demo
   pull_request:
   workflow_dispatch:
 
@@ -16,8 +16,8 @@ jobs:
         uses: ./traceable-ast
         with:
           step_name: 'init'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-          traffic_env: 'samarth-crapi'
+          client_scan_token: ${{ secrets.DEMO_TOKEN }}
+          traffic_env: 'astbb3'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
       - name: Run a loop as functional test
         run: |
@@ -29,6 +29,13 @@ jobs:
         uses: ./traceable-ast
         with:
           step_name: 'run'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-          traffic_env: 'samarth-crapi'
+          client_scan_token: ${{ secrets.DEMO_TOKEN }}
           cli_version: '1.0.0-rc.3'
+          traffic_env: 'astbb3'
+      - name: Abort Scan
+        uses: ./traceable-ast
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.DEMO_TOKEN }}
+          traffic_env: 'astbb3'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
