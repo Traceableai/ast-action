@@ -1,0 +1,30 @@
+name: Test Traceable AST Init And Run Action
+on:
+  push:
+    branches:
+      - crapi-demo
+  pull_request:
+
+jobs:
+  InitAndRunAstScan:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init and run scan action
+        uses: ./traceable-ast
+        with:
+          step_name: 'init and run'
+          client_scan_token: ${{ secrets.DEMO_TOKEN }}
+          cli_version: '1.0.0-rc.3'
+          traffic_env: 'astbb3'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+  functionalTest:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Run a loop as functional test
+        run: |
+          for ((i=1;i<=100;i++)); 
+          do 
+             echo $i
+          done
