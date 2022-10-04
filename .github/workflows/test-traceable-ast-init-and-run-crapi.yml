@@ -2,8 +2,9 @@ name: Test Traceable AST Init And Run Action
 on:
   push:
     branches:
-      - crapi-demo
+      - main
   pull_request:
+  workflow_dispatch:
 
 jobs:
   InitAndRunAstScan:
@@ -17,6 +18,14 @@ jobs:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.DEMO_TOKEN }}
           cli_version: '1.0.0-rc.3'
+          traffic_env: 'astbb3'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+      - name: Stop Scan
+        if: always()
+        uses: ./traceable-ast
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.DEMO_TOKEN }}
           traffic_env: 'astbb3'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
   functionalTest:
