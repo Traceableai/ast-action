@@ -1,5 +1,8 @@
 name: Traceable AST Action
-description: "Traceable AST Action"
+description: "GitHub action for Traceable Active Security Testing"
+branding:
+  icon: 'activity'  
+  color: 'red'
 inputs:
   step_name:
     required: true
