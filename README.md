@@ -71,7 +71,7 @@ jobs:
       
       - name: Stop Scan
         if: always()
-        uses: ./traceable-ast
+        uses: traceableai/ast-action
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
@@ -94,7 +94,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init and run scan action
-        uses: ./traceable-ast
+        uses: traceableai/ast-action
         with:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
@@ -103,7 +103,8 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
         if: always()
-        uses: ./traceable-ast
+
+        uses: traceableai/ast-action
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
