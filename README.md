@@ -14,9 +14,9 @@ Traceable’s GitHub action can be used to continuously test your software build
 ## Getting started with Traceable AST action
 ### Understanding the inputs
 
-| **Input**               | **Description**                                                        |
-| ------------------- | ------------------------------------------------------------------ |
-| step\_name          | Scan action: init/ run/ init and run.                              |
+| **Input**               | **Description**                                                    |
+| ------------------- |--------------------------------------------------------------------|
+| step\_name          | Scan action: init/ run/ init and run/ stop.                        |
 | scan\_name          | Name of the scan                                                   |
 | client\_scan\_token | Access token from platform                                         |
 | cli\_version        | Version of CLI you want to use for AST. Current one is 1.0.0-rc.3. |
@@ -33,7 +33,7 @@ Traceable’s GitHub action can be used to continuously test your software build
 
 
 ### Sample GitHub Action workflow
-1. Here is the sample GitHub actions workflow which shows how you can configure the AST GitHub action. 
+1. Here are the sample GitHub actions workflows which shows how you can configure the AST GitHub action. 
 ```
 name: Test Traceable AST Init Action And Traceable AST Run Action
 on:
@@ -68,6 +68,58 @@ jobs:
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'crapi-demo-1'
           cli_version: '1.0.0-rc.3'
+      
+      - name: Stop Scan
+        if: always()
+        uses: ./traceable-ast
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+```
+
+```
+name: Test Traceable AST Init And Run Action
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  InitAndRunAstScan:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init and run scan action
+        uses: ./traceable-ast
+        with:
+          step_name: 'init and run'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          cli_version: '1.0.0-rc.3'
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+      - name: Stop Scan
+        if: always()
+        uses: ./traceable-ast
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          
+  functionalTest: // (This is a sample functional test that runs in parallel to scans)
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Run a loop as functional test
+        run: |
+          for ((i=1;i<=100;i++)); 
+          do 
+             echo $i
+          done
+
 ```
 2. As you can see in the above workflow, we have initiated the scan with initiate scan action step which takes client_scan_token, traffic_env, and traceable_server as input. 
 3. In the next step we are executing functional tests and then running the scan in the step after that which take client_scan_token,traffic_env, and cli_version as input. 
