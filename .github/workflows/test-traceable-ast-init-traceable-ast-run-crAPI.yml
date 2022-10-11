@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init scan action
-        uses: ./traceable-ast
+        uses: traceableai/ast-action@main
         with:
           step_name: 'init'
           client_scan_token: ${{ secrets.DEMO_TOKEN }}
@@ -26,14 +26,14 @@ jobs:
              echo $i
           done
       - name: Run scan action
-        uses: ./traceable-ast
+        uses: traceableai/ast-action@main
         with:
           step_name: 'run'
           client_scan_token: ${{ secrets.DEMO_TOKEN }}
           cli_version: '1.0.0-rc.3'
           traffic_env: 'astbb3'
       - name: Abort Scan
-        uses: ./traceable-ast
+        uses: traceableai/ast-action@main
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.DEMO_TOKEN }}
