@@ -82,15 +82,15 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        chmod +x ${GITHUB_WORKSPACE}/traceable-ast/downloadCli.sh
-        ${GITHUB_WORKSPACE}/traceable-ast/downloadCli.sh \
+        chmod +x ${GITHUB_WORKSPACE}/downloadCli.sh
+        ${GITHUB_WORKSPACE}/downloadCli.sh \
         ${{ inputs.cli_version }}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
       run:  |
-        chmod +x ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh
-        ${GITHUB_WORKSPACE}/traceable-ast/initAndRun.sh \
+        chmod +x ${GITHUB_WORKSPACE}/initAndRun.sh
+        ${GITHUB_WORKSPACE}/initAndRun.sh \
         ./traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
@@ -111,8 +111,8 @@ runs:
     - name: Init command on cli
       if: ${{ inputs.step_name == 'init' }}
       run:  |
-        chmod +x ${GITHUB_WORKSPACE}/traceable-ast/init.sh
-        ${GITHUB_WORKSPACE}/traceable-ast/init.sh \
+        chmod +x ${GITHUB_WORKSPACE}/init.sh
+        ${GITHUB_WORKSPACE}/init.sh \
         ./traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
@@ -132,8 +132,8 @@ runs:
       id: run_scan
       if: ${{ inputs.step_name == 'run' }}
       run: |
-        chmod +x ${GITHUB_WORKSPACE}/traceable-ast/run.sh
-        ${GITHUB_WORKSPACE}/traceable-ast/run.sh \
+        chmod +x ${GITHUB_WORKSPACE}/run.sh
+        ${GITHUB_WORKSPACE}/run.sh \
         ./traceable \
         ${{ inputs.client_scan_token }} \
         ${{ inputs.idle_timeout }} \
