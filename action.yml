@@ -44,7 +44,7 @@ inputs:
   idle_timeout:
     required: false
     description: ''
-    default: 'NULL'
+    default: '10'
   scan_timeout:
     required: false
     description: ''
