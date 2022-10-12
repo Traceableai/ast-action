@@ -22,8 +22,6 @@ jobs:
           step_name: 'scan_from_gha'
           include_url_regex:'13.58.254.175'
           plugins:'java_log4shell,java_log4shell'
-
-
       - name: Stop Scan
         if: always()
         uses: ./traceable-ast
