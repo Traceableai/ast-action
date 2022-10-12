@@ -8,7 +8,7 @@ on:
 
 jobs:
   InitAndRunAstScan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,6 +19,11 @@ jobs:
           client_scan_token: '65aadb088cb2a508c0c0aea2e51194c4eeabc95ea952a38f094769a067e7e7f2ac884e63f52ab4abc1f9edb691b6b8d7c2654dc5f9027d8d336b0ad7b73ad763'
           traffic_env: 'astbb3'
           traceable_server: api-dev.traceable.ai
+          step_name: 'scan_from_gha'
+          include_url_regex:'13.58.254.175'
+          plugins:'java_log4shell,java_log4shell'
+
+
       - name: Stop Scan
         if: always()
         uses: ./traceable-ast
