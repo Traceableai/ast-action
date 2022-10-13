@@ -8,7 +8,7 @@ on:
 
 jobs:
   AstScan:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,6 +19,7 @@ jobs:
           client_scan_token: 65aadb088cb2a508c0c0aea2e51194c4eeabc95ea952a38f094769a067e7e7f2ac884e63f52ab4abc1f9edb691b6b8d7c2654dc5f9027d8d336b0ad7b73ad763
           traffic_env: 'astbb3'
           traceable_server: api-dev.traceable.ai
+          cli_version: '1.0.0-rc.3'
       - name: Run a loop as functional test
         run: |
           for ((i=1;i<=100;i++)); 
@@ -39,3 +40,4 @@ jobs:
           client_scan_token: 65aadb088cb2a508c0c0aea2e51194c4eeabc95ea952a38f094769a067e7e7f2ac884e63f52ab4abc1f9edb691b6b8d7c2654dc5f9027d8d336b0ad7b73ad763
           traffic_env: 'astbb3'
           traceable_server: api-dev.traceable.ai
+          
