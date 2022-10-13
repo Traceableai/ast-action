@@ -21,7 +21,7 @@ jobs:
           cli_version: '1.0.0-rc.3'
           traceable_server: api-dev.traceable.ai
           scan_name: 'scan_from_gha'
-          #include_url_regex: 13.58.254.175
+          include_url_regex: 13.58.254.175
           plugins: 'java_log4shell,unauthenticated_access,jwt_token_expiry'
       - name: Stop Scan
         if: always()
