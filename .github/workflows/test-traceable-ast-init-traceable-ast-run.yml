@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init scan action
-        uses: ./traceable-ast
+        uses: Traceableai/ast-action@main
         with:
           step_name: 'init'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
@@ -25,14 +25,14 @@ jobs:
              echo $i
           done
       - name: Run scan action
-        uses: ./traceable-ast
+        uses: Traceableai/ast-action@main
         with:
           step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'samarth-crapi'
           cli_version: '1.0.0-rc.3'
       - name: Abort Scan
-        uses: ./traceable-ast
+        uses: Traceableai/ast-action@main
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
