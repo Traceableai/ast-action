@@ -87,7 +87,7 @@ runs:
         then
         curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
         fi
-        tar -xvf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
+        tar -xvf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux  -x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
@@ -135,12 +135,40 @@ runs:
       id: run_scan
       if: ${{ inputs.step_name == 'run' }}
       run: |
-        chmod +x ${GITHUB_WORKSPACE}/run.sh
-        ${GITHUB_WORKSPACE}/run.sh \
-        ${GITHUB_WORKSPACE}/traceable \
-        ${{ inputs.client_scan_token }} \
-        ${{ inputs.idle_timeout }} \
-        ${{ inputs.max_retries }}
+        export LC_ALL=en_US.utf-8
+        export LANG=en_US.utf-8
+        if [ -f "/tmp/ca_file.crt" ]
+        then
+        export TRACEABLE_ROOT_CA_FILE_NAME=/tmp/ca_file.crt
+        fi
+        if  [ -f "/tmp/ca_cert.crt" ]
+        then
+        export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
+        fi
+        if  [ -f "/tmp/ca_key.crt" ]
+        then
+        export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
+        fi
+        
+        traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
+        scanRunCmd=$traceableCliBinaryLocation' ast scan run '
+        optionsArr=('--token' '--idle-timeout' '--max-retries' )
+        
+        #Iterating the options available from options array and filling them with the arguments received in order
+        iterator=0
+        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}'
+        do
+        if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
+        then
+        echo "${optionsArr[$iterator]}" is Null
+        else
+        scanRunCmd=$scanRunCmd" "${optionsArr[$iterator]}" "${option}
+        fi
+        iterator=$(($iterator+1))
+        done
+        
+        echo $scanRunCmd
+        $scanRunCmd
       shell: bash
     - name: Publish report
       if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
