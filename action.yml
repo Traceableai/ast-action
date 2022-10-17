@@ -82,16 +82,16 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        chmod +x ./downloadCli.sh
-        ./downloadCli.sh \
+        chmod +x ${GITHUB_WORKSPACE}/downloadCli.sh
+        ${GITHUB_WORKSPACE}/downloadCli.sh \
         ${{ inputs.cli_version }}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
       run:  |
-        chmod +x ./initAndRun.sh
-        ./initAndRun.sh \
-        ./traceable \
+        chmod +x ${GITHUB_WORKSPACE}/initAndRun.sh
+        ${GITHUB_WORKSPACE}/initAndRun.sh \
+        ${GITHUB_WORKSPACE}/traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
         ${{ inputs.client_scan_token }} \
@@ -111,9 +111,9 @@ runs:
     - name: Init command on cli
       if: ${{ inputs.step_name == 'init' }}
       run:  |
-        chmod +x ./init.sh
-        ./init.sh \
-        ./traceable \
+        chmod +x ${GITHUB_WORKSPACE}/init.sh
+        ${GITHUB_WORKSPACE}/init.sh \
+        ${GITHUB_WORKSPACE}/traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
         ${{ inputs.client_scan_token }} \
@@ -132,9 +132,9 @@ runs:
       id: run_scan
       if: ${{ inputs.step_name == 'run' }}
       run: |
-        chmod +x ./run.sh
-        ./run.sh \
-        ./traceable \
+        chmod +x ${GITHUB_WORKSPACE}/run.sh
+        ${GITHUB_WORKSPACE}/run.sh \
+        ${GITHUB_WORKSPACE}/traceable \
         ${{ inputs.client_scan_token }} \
         ${{ inputs.idle_timeout }} \
         ${{ inputs.max_retries }}
@@ -142,11 +142,11 @@ runs:
     - name: Publish report
       if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
       run: |
-        ./traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
+        ${GITHUB_WORKSPACE}/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
     - name: Stop scan
       id: stop_scan
       if: ${{ inputs.step_name == 'stop' }}
       run: |
-        ./traceable ast scan stop
+        ${GITHUB_WORKSPACE}/traceable ast scan stop
       shell: bash
