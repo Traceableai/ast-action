@@ -82,13 +82,12 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-      chmod +x downloadCli.sh
-      downloadCli.sh ${{ inputs.cli_version }}
+        chmod +x downloadCli.sh
+        downloadCli.sh ${{ inputs.cli_version }}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
       run: |
-        ls -la
         chmod +x ${GITHUB_WORKSPACE}/initAndRun.sh
         ${GITHUB_WORKSPACE}/initAndRun.sh \
         ${GITHUB_WORKSPACE}/traceable \
