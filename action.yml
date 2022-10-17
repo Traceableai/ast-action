@@ -82,9 +82,8 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        ls -la
-        chmod +x ${GITHUB_WORKSPACE}/downloadCli.sh
-        ${GITHUB_WORKSPACE}/downloadCli.sh \
+        chmod +x downloadCli.sh
+        downloadCli.sh \
         ${{ inputs.cli_version }}
       shell: bash
     - name: Init and run command on cli

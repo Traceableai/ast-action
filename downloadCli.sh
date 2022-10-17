@@ -1,4 +1,3 @@
-ls -la
 if [[ ${1}  = *"-rc."* ]]
 then
   curl -OL https://downloads.traceable.ai/cli/rc/${1}/tars/traceable-cli-${1}-linux-x86_64.tar.gz
