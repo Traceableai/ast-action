@@ -71,7 +71,7 @@ jobs:
       
       - name: Stop Scan
         if: always()
-        uses: Traceableai/ast-action@main
+        uses: traceableai/ast-action
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
