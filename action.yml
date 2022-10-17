@@ -88,7 +88,7 @@ runs:
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
-      run:
+      run: |
         ls -la
         chmod +x ${GITHUB_WORKSPACE}/initAndRun.sh
         ${GITHUB_WORKSPACE}/initAndRun.sh \
@@ -111,7 +111,7 @@ runs:
       shell: bash
     - name: Init command on cli
       if: ${{ inputs.step_name == 'init' }}
-      run:  |
+      run: |
         chmod +x ${GITHUB_WORKSPACE}/init.sh
         ${GITHUB_WORKSPACE}/init.sh \
         ${GITHUB_WORKSPACE}/traceable \
