@@ -81,8 +81,7 @@ runs:
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
-      run: downloadCli.sh \
-      ${{ inputs.cli_version }}
+      run: downloadCli.sh ${{ inputs.cli_version }}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
