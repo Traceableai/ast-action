@@ -89,8 +89,8 @@ runs:
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
       run:  |
-        chmod +x ${GITHUB_WORKSPACE}/initAndRun.sh
-        ${GITHUB_WORKSPACE}/initAndRun.sh \
+        chmod +x ./initAndRun.sh
+        ./initAndRun.sh \
         ./traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
@@ -111,8 +111,8 @@ runs:
     - name: Init command on cli
       if: ${{ inputs.step_name == 'init' }}
       run:  |
-        chmod +x ${GITHUB_WORKSPACE}/init.sh
-        ${GITHUB_WORKSPACE}/init.sh \
+        chmod +x ./init.sh
+        ./init.sh \
         ./traceable \
         ${{ inputs.scan_name }} \
         ${{ inputs.traffic_env }} \
@@ -132,8 +132,8 @@ runs:
       id: run_scan
       if: ${{ inputs.step_name == 'run' }}
       run: |
-        chmod +x ${GITHUB_WORKSPACE}/run.sh
-        ${GITHUB_WORKSPACE}/run.sh \
+        chmod +x ./run.sh
+        ./run.sh \
         ./traceable \
         ${{ inputs.client_scan_token }} \
         ${{ inputs.idle_timeout }} \
