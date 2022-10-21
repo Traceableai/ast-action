@@ -115,7 +115,6 @@ runs:
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan initAndRun'
         optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries')
-        stringArr=('--include-url-regex' '--exclude-url-regex' )
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
@@ -125,20 +124,7 @@ runs:
           then
             echo "${optionsArr[$iterator]}" is Null
           else
-            presentInStringArr=0
-            for subOption in "${stringArr[@]}"
-            do
-              if [ "$subOption" == "${optionsArr[$iterator]}" ]
-              then
-                presentInStringArr=1
-              fi
-            done
-            if [ $presentInStringArr -eq 0 ]
-            then
-              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
-            else
-              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "\"${option}\"
-            fi
+            scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
           fi
           iterator=$(($iterator+1))
         done
@@ -173,7 +159,6 @@ runs:
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan init '
         optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server'  '--scan-timeout' ' --reference-env' )
-        stringArr=('--include-url-regex' '--exclude-url-regex' )
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
@@ -183,20 +168,7 @@ runs:
           then
             echo "${optionsArr[$iterator]}" is Null
           else
-            presentInStringArr=0
-            for subOption in "${stringArr[@]}"
-            do
-              if [ "$subOption" == "${optionsArr[$iterator]}" ]
-              then
-                presentInStringArr=1
-              fi
-            done
-            if [ $presentInStringArr -eq 0 ]
-            then
-              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
-            else
-              scanInitCmd=$scanInitCmd" "${optionsArr[$iterator]}" "\"${option}\"
-            fi
+            scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
           fi
           iterator=$(($iterator+1))
         done
