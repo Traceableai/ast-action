@@ -33,6 +33,7 @@ jobs:
           cli_version: '1.0.0-rc.3'
       - name: Abort Scan
         uses: Traceableai/ast-action@main
+        if: always()
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
