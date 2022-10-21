@@ -118,7 +118,7 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in ${{ inputs.scan_name }} ${{ inputs.traffic_env }} ${{ inputs.client_scan_token }} ${{ inputs.plugins }} ${{ inputs.include_url_regex }} ${{ inputs.exclude_url_regex }} ${{ inputs.target_url }} ${{ inputs.traceable_server }} ${{ inputs.idle_timeout }} ${{ inputs.scan_timeout }} ${{ inputs.reference_env }} ${{ inputs.max_retries }}
+        for option in ${{ inputs.scan_name }} ${{ inputs.traffic_env }} ${{ inputs.client_scan_token }} ${{ inputs.plugins }} "${{ inputs.include_url_regex }}" "${{ inputs.exclude_url_regex }}" ${{ inputs.target_url }} ${{ inputs.traceable_server }} ${{ inputs.idle_timeout }} ${{ inputs.scan_timeout }} ${{ inputs.reference_env }} ${{ inputs.max_retries }}
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -162,7 +162,7 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in ${{ inputs.scan_name }} ${{ inputs.traffic_env }} ${{ inputs.client_scan_token }} ${{ inputs.plugins }} ${{ inputs.include_url_regex }} ${{ inputs.exclude_url_regex }} ${{ inputs.target_url }} ${{ inputs.traceable_server }} ${{ inputs.scan_timeout }} ${{ inputs.reference_env }}
+        for option in ${{ inputs.scan_name }} ${{ inputs.traffic_env }} ${{ inputs.client_scan_token }} ${{ inputs.plugins }} "${{ inputs.include_url_regex }}" "${{ inputs.exclude_url_regex }}" ${{ inputs.target_url }} ${{ inputs.traceable_server }} ${{ inputs.scan_timeout }} ${{ inputs.reference_env }}
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
