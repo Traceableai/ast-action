@@ -12,7 +12,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init scan action
-        uses: Traceableai/ast-action@file-restructuring
+        uses: Traceableai/ast-action@main
         with:
           step_name: 'init'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
