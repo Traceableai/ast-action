@@ -16,6 +16,10 @@ inputs:
     required: true
     description: ''
     default: 'NULL'
+  traceable_cli_download_path:
+    required: false
+    description: ''
+    default: 'NULL'
   cli_version:
     required: false
     description: ''
@@ -79,15 +83,21 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        if [[ "${{ inputs.cli_version }}"  = *"-rc."* ]]
+        if [[ "${{ inputs.traceable_cli_download_path }}" != "NULL" ]]
         then
-          curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
+          curl -Lo traceableCli.tar.gz ${{ inputs. traceable_cli_download_path }}
+          tar -xvf traceableCli.tar.gz --directory ${GITHUB_WORKSPACE}
+        else
+          if [[ "${{ inputs.cli_version }}"  = *"-rc."* ]]
+          then
+            curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/tars/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
+          fi
+          if [[ "${{ inputs.cli_version }}" = "latest" ]]
+          then
+            curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
+          fi
+          tar -xvf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
         fi
-        if [[ "${{ inputs.cli_version }}" = "latest" ]]
-        then
-          curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
-        fi
-        tar -xvf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
       shell: bash
     - name: Init and run command on cli
       if: ${{ inputs.step_name == 'init and run' }}
@@ -118,7 +128,7 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in ${{ inputs.scan_name }} ${{ inputs.traffic_env }} ${{ inputs.client_scan_token }} ${{ inputs.plugins }} ${{ inputs.include_url_regex }} ${{ inputs.exclude_url_regex }} ${{ inputs.target_url }} ${{ inputs.traceable_server }} ${{ inputs.idle_timeout }} ${{ inputs.scan_timeout }} ${{ inputs.reference_env }} ${{ inputs.max_retries }}
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' "${{ inputs.include_url_regex }}" "${{ inputs.exclude_url_regex }}" '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -162,7 +172,7 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in ${{ inputs.scan_name }} ${{ inputs.traffic_env }} ${{ inputs.client_scan_token }} ${{ inputs.plugins }} ${{ inputs.include_url_regex }} ${{ inputs.exclude_url_regex }} ${{ inputs.target_url }} ${{ inputs.traceable_server }} ${{ inputs.scan_timeout }} ${{ inputs.reference_env }}
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' "${{ inputs.include_url_regex }}" "${{ inputs.exclude_url_regex }}" '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -201,7 +211,7 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in ${{ inputs.client_scan_token }} ${{ inputs.idle_timeout }} ${{ inputs.max_retries }}
+        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
