@@ -83,7 +83,7 @@ runs:
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
       run: |
-        if [[ "${{ inputs.traceable_cli_download_path }}" = "NULL" ]]
+        if [[ "${{ inputs.traceable_cli_download_path }}" != "NULL" ]]
         then
           curl -OL traceableCli.tar.gz ${{ inputs. traceable_cli_download_path }}
           tar -xvf traceableCli.tar.gz --directory ${GITHUB_WORKSPACE}
