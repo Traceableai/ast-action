@@ -92,8 +92,7 @@ runs:
           then
             curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
           fi
-          if [[ "${{ inputs.cli_version }}" = "latest" ]]
-          then
+          else
             curl -OL https://downloads.traceable.ai/cli/release/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
           fi
           tar -xvf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
