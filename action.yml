@@ -91,7 +91,6 @@ runs:
           if [[ "${{ inputs.cli_version }}"  = *"-rc."* ]]
           then
             curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
-          fi
           else
             curl -OL https://downloads.traceable.ai/cli/release/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
           fi
