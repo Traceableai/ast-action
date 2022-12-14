@@ -31,7 +31,7 @@ jobs:
           step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'samarth-crapi'
-          cli_version: '1.0.0-rc.3'
+          cli_version: 'latest'
       - name: Abort Scan
         uses: Traceableai/ast-action@main
         if: always()

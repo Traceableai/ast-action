@@ -67,7 +67,7 @@ jobs:
           step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'crapi-demo-1'
-          cli_version: '1.0.0-rc.3'
+          cli_version: 'latest'
       
       - name: Stop Scan
         if: always()
@@ -98,7 +98,7 @@ jobs:
         with:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          cli_version: '1.0.0-rc.3'
+          cli_version: 'latest'
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
