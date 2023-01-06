@@ -107,16 +107,19 @@ runs:
         then
           echo "${{ inputs.traceable_root_ca }}" > /tmp/ca_file.crt
           export TRACEABLE_ROOT_CA_FILE_NAME=/tmp/ca_file.crt
+          echo hello
         fi
         if  [[ -n ${{ inputs.traceable_cli_cert }} ]] && [[ ${{ inputs.traceable_cli_cert }} != "''" ]] && [[ ${{ inputs.traceable_cli_cert }} != "NULL" ]]
         then
           echo "${{ inputs.traceable_cli_cert }}" > /tmp/ca_cert.crt
           export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
+          echo hello2
         fi
         if  [[ -n ${{ inputs.traceable_cli_key }} ]] && [[ ${{ inputs.traceable_cli_key }} != "''" ]] && [[ ${{ inputs.traceable_cli_key }} != "NULL" ]]
         then
           echo "${{ inputs.traceable_cli_key }}" > /tmp/ca_key.crt
           export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
+          echo hello3
         fi
         
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
