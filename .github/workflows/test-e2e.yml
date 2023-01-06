@@ -22,8 +22,27 @@ jobs:
           include_url_regex: '13.58.254.175'
           traceable_cli_download_path: 'https://downloads.traceable.ai/cli/release/latest/traceable-cli-latest-linux-x86_64.tar.gz'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-          traceable_cli_cert: '---Begin'
-
+          traceable_ca_cert: '"-----BEGIN CERTIFICATE-----
+MIIDazCCAlOgAwIBAgIUYjeggQQLDbpcUVwi/7EiUzMHqEUwDQYJKoZIhvcNAQEL
+BQAwRTELMAkGA1UEBhMCSU4xEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
+GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAeFw0yMzAxMDYwOTM4MjlaFw0zMzAx
+MDMwOTM4MjlaMEUxCzAJBgNVBAYTAklOMRMwEQYDVQQIDApTb21lLVN0YXRlMSEw
+HwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwggEiMA0GCSqGSIb3DQEB
+AQUAA4IBDwAwggEKAoIBAQC1+eBDI0zyr/kaGg/0gqvCVLL79a6sSu96CkrBX6vQ
+Hzfu2zEYQKaiCofrzaGyMISRdGOMmVpA9NS4vibrdIXkWFzwWqL7NN9UXQtCidJy
+xPNCK5LGu9AzzC5V0zL71VCx5S9LmeYDm6xIMkAcumyXWr5m6zyaCksy1vkBqFd4
+1f+Bu2nzncF1FLT87Co1c5zxmcwrumlDY/d7tvCBLYHIKKZJsd2cc4DAxlexfSB2
+2TpJKAmT8ed7m3r0XSiVpPAU+QMOeOcxdmBrOpPg9KRAjk30CzJ5os81uVnulMyV
+K98WCwGaE2E36qzWnNJ8uaN1COA+c4v4/U4fwT4Yd3IHAgMBAAGjUzBRMB0GA1Ud
+DgQWBBTC02gYCMNLD4hKIqZI3k0vAAKedTAfBgNVHSMEGDAWgBTC02gYCMNLD4hK
+IqZI3k0vAAKedTAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCF
+SzITTfaYSatkzXKaWIhh566ziFfmQfuotqPXV/Ss+PBrGU+eSRo6A+jr2VNmtf08
+CEOcaocyKiWVbsv1MLmSFrfVT9K0c3wftuth/PsMZKp9r5RntsaeA5vjEb84FtBy
+lCP2zSOKDtPWOARnr3D6fciqRY238xBQi/PuiJs9YRMPcTsuu1J9fRsZNzVVABuE
+e3yKrpYTX9yr/EPZhS5PKB2yu5EToQ+8V+NteWwkjkQZd4HEJyyGLEWzsSyhzRXJ
+TwbAIvgJZfsNZzGZGgID2CoDqu3uLrZQ7vwDpvH3U7sbxZ2+mvG+WPHAuHIYppoi
+MOVnwoclmeEnRWo9TjC4
+-----END CERTIFICATE-----"'
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@test

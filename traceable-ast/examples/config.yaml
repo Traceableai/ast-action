@@ -1,0 +1,20 @@
+token: <token>
+traceable_server: api.traceable.ai:443
+scan:
+  plugins:
+    # Enable prehooks for all plugins
+    pre_hooks:
+      - defaults_crapi_login_prehook
+    post_hooks:
+      - defaults_crapi_login_posthook
+    authentication:
+      unauthenticated_access:
+        pre_hooks:
+          # Disable defaults_crapi_login_prehook for unauthenticated_access
+          - defaults_crapi_login_prehook:
+              disabled: true
+          # Disable defaults_crapi_login_posthook for unauthenticated_access
+          - defaults_crapi_login_posthook:
+              disabled: true
+    custom:
+      sample_plugin: {}
