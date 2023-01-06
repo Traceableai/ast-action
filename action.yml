@@ -113,7 +113,7 @@ runs:
         then
           echo "${{ inputs.traceable_cli_cert }}" > /tmp/ca_cert.crt
           export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
-          echo hello2
+          cat /tmp/ca_cert.crt
         fi
         if  [[ -n ${{ inputs.traceable_cli_key }} ]] && [[ ${{ inputs.traceable_cli_key }} != "''" ]] && [[ ${{ inputs.traceable_cli_key }} != "NULL" ]]
         then
