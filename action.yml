@@ -103,19 +103,19 @@ runs:
         export LC_ALL=en_US.utf-8
         export LANG=en_US.utf-8
         
-        if  [[ -n ${{ inputs.traceable_root_ca }} ]] && [[ ${{ inputs.traceable_root_ca }} != "''" ]] && [[ ${{ inputs.traceable_root_ca }} != "NULL" ]]
+        if  [[ -n "${{ inputs.traceable_root_ca }}" ]] && [[ "${{ inputs.traceable_root_ca }}" != "''" ]] && [[ "${{ inputs.traceable_root_ca }}" != "NULL" ]]
         then
           echo "${{ inputs.traceable_root_ca }}" > /tmp/ca_file.crt
           export TRACEABLE_ROOT_CA_FILE_NAME=/tmp/ca_file.crt
           echo hello
         fi
-        if  [[ -n ${{ inputs.traceable_cli_cert }} ]] && [[ ${{ inputs.traceable_cli_cert }} != "''" ]] && [[ ${{ inputs.traceable_cli_cert }} != "NULL" ]]
+        if  [[ -n "${{ inputs.traceable_cli_cert }}" ]] && [[ "${{ inputs.traceable_cli_cert }}" != "''" ]] && [[ "${{ inputs.traceable_cli_cert }}" != "NULL" ]]
         then
           echo "${{ inputs.traceable_cli_cert }}" > /tmp/ca_cert.crt
           export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
           cat /tmp/ca_cert.crt
         fi
-        if  [[ -n ${{ inputs.traceable_cli_key }} ]] && [[ ${{ inputs.traceable_cli_key }} != "''" ]] && [[ ${{ inputs.traceable_cli_key }} != "NULL" ]]
+        if  [[ -n "${{ inputs.traceable_cli_key }}" ]] && [[ "${{ inputs.traceable_cli_key }}" != "''" ]] && [[ "${{ inputs.traceable_cli_key }}" != "NULL" ]]
         then
           echo "${{ inputs.traceable_cli_key }}" > /tmp/ca_key.crt
           export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
