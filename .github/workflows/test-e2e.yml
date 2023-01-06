@@ -22,7 +22,7 @@ jobs:
           include_url_regex: '13.58.254.175'
           traceable_cli_download_path: 'https://downloads.traceable.ai/cli/release/latest/traceable-cli-latest-linux-x86_64.tar.gz'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-          traceable_root_ca: '"-----BEGIN CERTIFICATE-----
+          traceable_root_ca: '-----BEGIN CERTIFICATE-----
 MIIDazCCAlOgAwIBAgIUYjeggQQLDbpcUVwi/7EiUzMHqEUwDQYJKoZIhvcNAQEL
 BQAwRTELMAkGA1UEBhMCSU4xEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM
 GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAeFw0yMzAxMDYwOTM4MjlaFw0zMzAx
@@ -42,7 +42,7 @@ lCP2zSOKDtPWOARnr3D6fciqRY238xBQi/PuiJs9YRMPcTsuu1J9fRsZNzVVABuE
 e3yKrpYTX9yr/EPZhS5PKB2yu5EToQ+8V+NteWwkjkQZd4HEJyyGLEWzsSyhzRXJ
 TwbAIvgJZfsNZzGZGgID2CoDqu3uLrZQ7vwDpvH3U7sbxZ2+mvG+WPHAuHIYppoi
 MOVnwoclmeEnRWo9TjC4
------END CERTIFICATE-----"'
+-----END CERTIFICATE-----'
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@test
