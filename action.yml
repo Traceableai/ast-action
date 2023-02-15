@@ -98,8 +98,8 @@ runs:
   steps:
     - name: Validate required parameters
       run: |
-        [[ "${{ inputs.step_name }}" == "NULL" ]] || { echo "step name input is empty" ; exit 1; }
-        [[ "${{ inputs.client_scan_token }}" == "NULL" ]] || { echo "client_scan_token input is empty" ; exit 1; }
+        [[ "${{ inputs.step_name }}" != "NULL" ]] || { echo "step name input is empty" ; exit 1; }
+        [[ "${{ inputs.client_scan_token }}" != "NULL" ]] || { echo "client_scan_token input is empty" ; exit 1; }
       shell: bash
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
