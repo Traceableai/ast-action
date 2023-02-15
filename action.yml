@@ -230,7 +230,7 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }} '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' 
+        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' 
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
