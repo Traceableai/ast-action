@@ -52,7 +52,7 @@ inputs:
     required: false
     description: ''
     default: 'NULL'
-  open_api_spec_ids:
+  openapi_spec_ids:
     required: false
     description: 'provide comma separated open api spec ids'
     default: 'NULL'
