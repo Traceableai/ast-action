@@ -1,0 +1,36 @@
+#This is a temporary workflow to test gha plugin. Will be deleted after the testing gets completed
+
+name: Test AST GHA Plugin
+on:
+  workflow_dispatch:
+    inputs:
+     cli_version:
+        description: "CLI version"
+        default: "1.3.0-rc.0"
+        required: true
+     api_token:
+        description: "Api token"
+        required: true
+jobs:
+  AstScan:
+    name: Run Workflow
+    runs-on: ubuntu-20.04    
+      - name: Init scan action
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'init'
+          scan_name: gha_scan_init
+          client_scan_token: ${{ github.event.inputs.cli_version || '1.3.0-dev.12' }}
+          traffic_env: 'ast_load'
+          traceable_server: api-dev.traceable.ai
+          cli_version: ${{ github.event.inputs.api_token }}
+          scan_timeout: 10
+          # plugins: 'unauthenticated_access,java_log4shell'
+      - name: Run scan action
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'run'  
+      - name: Stop Scan
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'stop'
