@@ -27,6 +27,7 @@ jobs:
           traceable_server: ${{ github.event.inputs.traceable_server}}
           policy: 'test_open_api'
           include_url_regex: '18.116.165.77'
+          target_url: 'http://18.116.165.77:8888'
 
       - name: Stop Scan
         if: always()
