@@ -24,7 +24,7 @@ jobs:
           # step_name: 'init and run'
           client_scan_token: ${{ github.event.inputs.traceable_token}}
           cli_version: 'latest'
-          traffic_env: 'ast_load'
+          # traffic_env: 'ast_load'
           traceable_server: ${{ github.event.inputs.traceable_server}}
           policy: 'test_all'
 
