@@ -21,7 +21,7 @@ jobs:
       - name: Init and run scan action
         uses: Traceableai/ast-action@main
         with:
-          # step_name: 'init and run'
+          step_name: 'init and run'
           client_scan_token: ${{ github.event.inputs.traceable_token}}
           cli_version: 'latest'
           # traffic_env: 'ast_load'
