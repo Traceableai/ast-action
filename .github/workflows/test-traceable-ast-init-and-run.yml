@@ -25,8 +25,8 @@ jobs:
           client_scan_token: ${{ github.event.inputs.traceable_token}}
           cli_version: 'latest'
           traceable_server: ${{ github.event.inputs.traceable_server}}
-          policy: 'test_all'
-          exclude_url_regex: '".*"'
+          policy: 'test_open_api'
+          include_url_regex: '18.116.165.77'
 
       - name: Stop Scan
         if: always()
