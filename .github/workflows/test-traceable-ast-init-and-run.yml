@@ -20,6 +20,7 @@ jobs:
           cli_version: '1.1.0-rc.3'
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          include_url_regex: .*
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@test
