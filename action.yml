@@ -113,6 +113,18 @@ inputs:
     required: false
     description: ''
     default: 'NULL'
+  proxy_mode:
+    required: false
+    description: 'Run a scan in proxy mode or not'
+    default: 'false'
+  ta_service_name:
+    required: false
+    description: 'TA service name'
+    default: 'proxy'
+  tpa_endpoint:
+    required: false
+    description: 'Traceable platform agent (TPA) reporting endpoint'
+    default: 'localhost'
 
 runs:
   using: composite
@@ -179,6 +191,15 @@ runs:
           iterator=$(($iterator+1))
         done
         
+        if [[ "$inputs.proxy_mode" == "true" ]]
+        then
+          export TRACEABLE_PROXY_HOST=localhost
+          export TRACEABLE_PROXY_PORT=18080
+          export TA_SERVICE_NAME="$inputs.ta_service_name"
+          unset http_proxy
+          scanInitCmd=$scanInitCmd" -tpa "${inputs.tpa_endpoint}" --proxy"
+        fi
+
         $scanInitCmd
 
       shell: bash
