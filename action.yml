@@ -199,7 +199,7 @@ runs:
           unset http_proxy
           scanInitCmd=$scanInitCmd" -tpa "${{ inputs.tpa_endpoint }}" --proxy"
         fi
-
+        echo "Running cli command $scanInitCmd"
         $scanInitCmd
 
       shell: bash
@@ -242,7 +242,7 @@ runs:
           fi
           iterator=$(($iterator+1))
         done
-        
+        echo "Running cli command $scanInitCmd"
         $scanInitCmd
       shell: bash
     - name: Run command on cli
@@ -280,7 +280,7 @@ runs:
           fi
           iterator=$(($iterator+1))
         done
-        
+        echo "Running cli command $scanRunCmd"
         $scanRunCmd
       shell: bash
     - name: Publish report
