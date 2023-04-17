@@ -190,7 +190,7 @@ runs:
             then
               scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" ""${option}"
             else
-              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" ""${option}"
+              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
           fi
           iterator=$(($iterator+1))
         done
