@@ -40,11 +40,11 @@ inputs:
   include_url_regex:
     required: false
     description: ''
-    default: 'NULL'
+    default: '.*'
   exclude_url_regex:
     required: false
     description: ''
-    default: 'NULL'
+    default: '.logout.'
   include_endpoint_labels:
     required: false
     description: ''
