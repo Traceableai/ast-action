@@ -188,7 +188,7 @@ runs:
           else
             if [ "${optionsArr[$iterator]}" = "--include-url-regex" ] || [ "${optionsArr[$iterator]}" = "--exclude-url-regex" ]
             then
-              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" ""${option}"
+              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" \"${option}\""
             else
               scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
           fi
