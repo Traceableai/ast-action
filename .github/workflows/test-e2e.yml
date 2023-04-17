@@ -13,13 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init and run scan action
-        uses: Traceableai/ast-action@main
+        uses: Traceableai/ast-action@e2e-test
         with:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: 'latest'
           traffic_env: 'crapi-demo1'
-          include_url_regex: '13.58.254.175'
+          include_url_regex: .*
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
         if: always()
