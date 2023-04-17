@@ -186,7 +186,12 @@ runs:
           then
             echo "${optionsArr[$iterator]}" is Null
           else
-            scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
+            if [ "${optionsArr[$iterator]}" = "--include-url-regex" ] || [ "${optionsArr[$iterator]}" = "--exclude-url-regex" ]
+            then
+              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" \"${option}\""
+            else
+              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
+            fi
           fi
           iterator=$(($iterator+1))
         done
@@ -232,13 +237,18 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '"${{ inputs.include_url_regex }}"' '"${{ inputs.exclude_url_regex }}"' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
             echo "${optionsArr[$iterator]}" is Null
           else
-            scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
+            if [ "${optionsArr[$iterator]}" = "--include-url-regex" ] || [ "${optionsArr[$iterator]}" = "--exclude-url-regex" ]
+            then
+              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" \"${option}\""
+            else
+              scanInitCmd=$scanInitCmd"  "${optionsArr[$iterator]}" "${option}
+            fi
           fi
           iterator=$(($iterator+1))
         done
