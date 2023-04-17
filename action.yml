@@ -191,13 +191,13 @@ runs:
           iterator=$(($iterator+1))
         done
         
-        if [[ "$inputs.proxy_mode" == "true" ]]
+        if [[ "${{ inputs.proxy_mode }}" == "true" ]]
         then
           export TRACEABLE_PROXY_HOST=localhost
           export TRACEABLE_PROXY_PORT=18080
-          export TA_SERVICE_NAME="$inputs.ta_service_name"
+          export TA_SERVICE_NAME="${{ inputs.ta_service_name }}"
           unset http_proxy
-          scanInitCmd=$scanInitCmd" -tpa "${inputs.tpa_endpoint}" --proxy"
+          scanInitCmd=$scanInitCmd" -tpa "${{ inputs.tpa_endpoint }}" --proxy"
         fi
 
         $scanInitCmd
