@@ -19,7 +19,7 @@ jobs:
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: 'latest'
           traffic_env: 'crapi-demo1'
-          include_url_regex: '.*'
+          include_url_regex: .*
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
         if: always()
