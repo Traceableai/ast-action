@@ -293,24 +293,6 @@ runs:
         echo "Running cli command $scanRunCmd"
         $scanRunCmd
       shell: bash
-    - name: Publish report
-      if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
-      run: |
-        export LC_ALL=en_US.utf-8
-        export LANG=en_US.utf-8
-        if [ -f "/tmp/ca_file.crt" ]
-        then
-          export TRACEABLE_ROOT_CA_FILE_NAME=/tmp/ca_file.crt
-        fi
-        if  [ -f "/tmp/ca_cert.crt" ]
-        then
-          export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
-        fi
-        if  [ -f "/tmp/ca_key.crt" ]
-        then
-          export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
-        fi        
-      shell: bash
     - name: Stop scan
       id: stop_scan
       if: ${{ inputs.step_name == 'stop' }}
