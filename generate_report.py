@@ -7,5 +7,5 @@ if __name__ == '__main__':
     testsuite.add_property('ID', "sdfg23456vbj678bn")
     testsuite.add_property('Env', "Prod")
     report.add_testsuite(testsuite)
-    with open("report.xml", "wb") as f:
-        report.write(f, encoding="UTF-8")
+    with open("report.xml", "w") as f:
+        f.write(report.to_xml())
