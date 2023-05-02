@@ -22,7 +22,6 @@ jobs:
         run: pip install junitparser
 
       - name: Generate JUnit report
-        working-directory: ../
         run: python workflows/generate_report.py --junit-report report.xml
 
       - name: Upload JUnit report
