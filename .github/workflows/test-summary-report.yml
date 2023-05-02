@@ -34,9 +34,9 @@ jobs:
     needs: generate-report
     runs-on: ubuntu-latest
     steps:
-      - name: Disable Debug Logs
-        env:
-          ACTIONS_STEP_DEBUG: 'false'
+      # - name: Disable Debug Logs
+      #   env:
+      #     ACTIONS_STEP_DEBUG: 'false'
 
       - name: Download JUnit report
         uses: actions/download-artifact@v2
