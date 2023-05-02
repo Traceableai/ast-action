@@ -34,6 +34,10 @@ jobs:
     needs: generate-report
     runs-on: ubuntu-latest
     steps:
+      - name: Disable Debug Logs
+        env:
+          ACTIONS_STEP_DEBUG: 'false'
+
       - name: Download JUnit report
         uses: actions/download-artifact@v2
         with:
@@ -42,8 +46,15 @@ jobs:
       - name: Debug report file
         run: cat report.xml
           
-      - name: Display JUnit report
-        uses: mikepenz/action-junit-report@v3
+      # - name: Display JUnit report
+      #   uses: mikepenz/action-junit-report@v3
+      #   with:
+      #     report_paths: junit-report/report.xml
+
+      - name: Publish JUnit test results
+        uses: EnricoMi/publish-unit-test-result-action@v1
         with:
-          report_paths: junit-report/report.xml
+          test_results_files: report.xml
+          check_run_name: My Test Results
+          fail_on_error: true
       
