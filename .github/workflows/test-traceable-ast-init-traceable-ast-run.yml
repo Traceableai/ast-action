@@ -1,8 +1,10 @@
 name: Test Traceable AST Init Action And Traceable AST Run Action
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
+    branches-ignore:
+      - summary-report-action
   pull_request:
 
 jobs:
