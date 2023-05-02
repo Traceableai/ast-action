@@ -309,8 +309,12 @@ runs:
         if  [ -f "/tmp/ca_key.crt" ]
         then
           export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
-        fi        
-        ${GITHUB_WORKSPACE}/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
+        fi  
+        echo "--------------"
+        echo ${GITHUB_WORKSPACE}
+        echo $GITHUB_STEP_SUMMARY
+        echo "--------------"
+        # ${GITHUB_WORKSPACE}/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
     - name: Stop scan
       id: stop_scan
