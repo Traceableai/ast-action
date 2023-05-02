@@ -23,7 +23,7 @@ jobs:
 
       - name: Generate JUnit report
         working-directory: ../
-        run: python generate_report.py --junit-report report.xml
+        run: python workflows/generate_report.py --junit-report report.xml
 
       - name: Upload JUnit report
         uses: actions/upload-artifact@v2
