@@ -1,0 +1,46 @@
+name: Test summary report
+on:
+  push:
+    branches:
+      - summary-report-action
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  generateReport:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+
+      - name: Install dependencies
+        run: pip install junitparser
+
+      - name: Generate JUnit report
+        run: python generate_report.py --junit-report report.xml
+
+      - name: Upload JUnit report
+        uses: actions/upload-artifact@v2
+        with:
+          name: junit-report
+          path: report.xml
+
+  display-report:
+    needs: generate-report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download JUnit report
+        uses: actions/download-artifact@v2
+        with:
+          name: junit-report
+          
+      - name: Display JUnit report
+        uses: stefanzweifel/action-junit-report@v2
+        with:
+          report_paths: junit-report/report.xml
+      
