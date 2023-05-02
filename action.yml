@@ -314,7 +314,7 @@ runs:
         echo ${GITHUB_WORKSPACE}
         echo $GITHUB_STEP_SUMMARY
         echo "--------------"
-        ${GITHUB_WORKSPACE}/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
+        # ${GITHUB_WORKSPACE}/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
     - name: Stop scan
       id: stop_scan
