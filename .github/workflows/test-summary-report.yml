@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  generateReport:
+  generate-report:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout
