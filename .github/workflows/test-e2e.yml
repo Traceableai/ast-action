@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - main
+    branches-ignore:
+      - summary-report-action
   pull_request:
   workflow_dispatch:
 
