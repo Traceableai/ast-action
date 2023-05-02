@@ -40,7 +40,7 @@ jobs:
           name: junit-report
           
       - name: Display JUnit report
-        uses: stefanzweifel/action-junit-report@v3
+        uses: mikepenz/action-junit-report@v3
         with:
           report_paths: junit-report/report.xml
       
