@@ -22,7 +22,7 @@ jobs:
         run: pip install junitparser
 
       - name: Generate JUnit report
-        run: python workflows/generate_report.py --junit-report report.xml
+        run: python generate_report.py
 
       - name: Upload JUnit report
         uses: actions/upload-artifact@v2
