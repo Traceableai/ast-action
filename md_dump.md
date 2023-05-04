@@ -1,12 +1,17 @@
-<details><summary>Scan Details summary</summary># Scan Details 👀
+<details><summary>Scan Details summary</summary>
+
+# Scan Details 👀
 
 - Name: testMD
-- ID: e57c4a2c-d18c-4f46-8ca1-8396b34eb439
-- Created at: 2023-05-04 19:30:20
+- ID: 1ce0c944-8434-486a-9be9-ab594031205e
+- Created at: 2023-05-04 20:54:42
 - Environment: ast_load2
-- State: Completed</details>
+- State: Completed
+</details>
 
-<details><summary>Vulnerabilities summary</summary># Vulnerabilities 💀
+<details><summary>Vulnerabilities summary</summary>
+
+# Vulnerabilities 💀
 
 | Plugin Category             | Plugin Subcategory                      | Vulnerabilities Found 🎯 | Executed/Generated Tests 🏁 | Severity ⚠ |
 | --------------------------- | --------------------------------------- | ----------------------- | -------------------------- | ---------- |
@@ -53,9 +58,12 @@
 | Insecure Design             | Cloud Metadata Potentially Exposed      | 0                       | 0/0                        | -🟡         |
 | Insecure Design             | GET for POST                            | 0                       | 0/0                        | -🟡         |
 | Cross Site Scripting        | Stored Cross Site Scripting             | 0                       | 0/0                        | -🟡         |
-| Json Web Token              | JWT Weak HMAC Secret                    | 0                       | 0/0                        | -🟡         |</details>
+| Json Web Token              | JWT Weak HMAC Secret                    | 0                       | 0/0                        | -🟡         |
+</details>
 
-<details><summary>Scan Details summary</summary># Scan Evaluation 🔎
+<details><summary>Scan Evaluation summary</summary>
+
+# Scan Evaluation 🔎
 
 result: Fail ❌
 
@@ -63,7 +71,8 @@ result: Fail ❌
 
 | Asset Type | Asset Selection | Vulnerability Selection | Severity ⚠ | Operator  | Threshold 🛑 | Actual Count 📌 |
 | ---------- | --------------- | ----------------------- | ---------- | --------- | ----------- | -------------- |
-| ENDPOINT   | Any             | New                     | CRITICAL ️ | LESS_THAN | 3           | 3              |</details>
+| ENDPOINT   | Any             | New                     | CRITICAL ️ | LESS_THAN | 3           | 3              |
+</details>
 
 # Response Summary per API
 
