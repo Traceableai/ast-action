@@ -1,8 +1,8 @@
 # Scan Details 👀
 
 - Name: testMD
-- ID: f97776e8-7d16-4875-84fe-43e1ded0b6ea
-- Created at: 2023-05-04 15:03:14
+- ID: 6f68758a-126f-40b6-af00-f46988f7064a
+- Created at: 2023-05-04 15:25:52
 - Environment: ast_load2
 - State: Completed
 
@@ -80,9 +80,11 @@ result: Fail ❌
 | TLS    | 10       |
 | Jwt    | 31       |
 
-## This is doc2
 
-| heading-1 | heading-2 |
-| --------- | --------- |
-| val-1     | val-2     |
-| val-3     | val-4     |
+        <details>
+        <summary>Click to expand</summary>
+
+        This is some hidden content!
+
+        </details>
+        
