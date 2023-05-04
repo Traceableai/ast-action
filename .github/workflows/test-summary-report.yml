@@ -7,54 +7,78 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate-report:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.9"
-
-      - name: Install dependencies
-        run: pip install junitparser
-
-      - name: Generate JUnit report
-        run: python generate_report.py
-
-      - name: Upload JUnit report
-        uses: actions/upload-artifact@v2
-        with:
-          name: junit-report
-          path: report.xml
-
-  display-report:
-    needs: generate-report
+  show_markdown:
     runs-on: ubuntu-latest
     steps:
-      # - name: Disable Debug Logs
-      #   env:
-      #     ACTIONS_STEP_DEBUG: 'false'
-
-      - name: Download JUnit report
-        uses: actions/download-artifact@v2
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Read_Markdown_File
+        run: |
+          markdown=$(cat md_dump.md)
+          echo "::set-output name=markdown::$markdown"
+      
+      - name: Display Markdown File in Workflow Summary
+        uses: actions/github-script@v3
         with:
-          name: junit-report
+          script: |
+            const markdown = '${{ steps.Read_Markdown_File.outputs.markdown }}';
+            github.workflow.update({
+              status: "completed",
+              conclusion: "success",
+              output: {
+                title: "My Markdown File",
+                summary: markdown
+              }
+            })
+  # generate-report:
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
 
-      # - name: Debug report file
-      #   run: cat report.xml
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v3
+  #       with:
+  #         python-version: "3.9"
+
+  #     - name: Install dependencies
+  #       run: pip install junitparser
+
+  #     - name: Generate JUnit report
+  #       run: python generate_report.py
+
+  #     - name: Upload JUnit report
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: junit-report
+  #         path: report.xml
+
+  # display-report:
+  #   needs: generate-report
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # - name: Disable Debug Logs
+  #     #   env:
+  #     #     ACTIONS_STEP_DEBUG: 'false'
+
+  #     - name: Download JUnit report
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: junit-report
+
+  #     # - name: Debug report file
+  #     #   run: cat report.xml
           
-      - name: Display JUnit report
-        uses: mikepenz/action-junit-report@v3
-        with:
-          report_paths: junit-report/report.xml
+  #     - name: Display JUnit report
+  #       uses: mikepenz/action-junit-report@v3
+  #       with:
+  #         report_paths: junit-report/report.xml
 
-      # - name: Publish JUnit test results
-      #   uses: EnricoMi/publish-unit-test-result-action@v2
-      #   # with:
-      #   #   test_results_files: report.xml
-      #   #   check_run_name: My Test Results
-      #   #   fail_on_error: true
+  #     # - name: Publish JUnit test results
+  #     #   uses: EnricoMi/publish-unit-test-result-action@v2
+  #     #   # with:
+  #     #   #   test_results_files: report.xml
+  #     #   #   check_run_name: My Test Results
+  #     #   #   fail_on_error: true
       
