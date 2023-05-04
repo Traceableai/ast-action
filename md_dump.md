@@ -1,12 +1,12 @@
-# Scan Details 👀
+<details><summary>Scan Details summary</summary># Scan Details 👀
 
 - Name: testMD
-- ID: 6f68758a-126f-40b6-af00-f46988f7064a
-- Created at: 2023-05-04 15:25:52
+- ID: e57c4a2c-d18c-4f46-8ca1-8396b34eb439
+- Created at: 2023-05-04 19:30:20
 - Environment: ast_load2
-- State: Completed
+- State: Completed</details>
 
-# Vulnerabilities 💀
+<details><summary>Vulnerabilities summary</summary># Vulnerabilities 💀
 
 | Plugin Category             | Plugin Subcategory                      | Vulnerabilities Found 🎯 | Executed/Generated Tests 🏁 | Severity ⚠ |
 | --------------------------- | --------------------------------------- | ----------------------- | -------------------------- | ---------- |
@@ -53,9 +53,9 @@
 | Insecure Design             | Cloud Metadata Potentially Exposed      | 0                       | 0/0                        | -🟡         |
 | Insecure Design             | GET for POST                            | 0                       | 0/0                        | -🟡         |
 | Cross Site Scripting        | Stored Cross Site Scripting             | 0                       | 0/0                        | -🟡         |
-| Json Web Token              | JWT Weak HMAC Secret                    | 0                       | 0/0                        | -🟡         |
+| Json Web Token              | JWT Weak HMAC Secret                    | 0                       | 0/0                        | -🟡         |</details>
 
-# Scan Evaluation 🔎
+<details><summary>Scan Details summary</summary># Scan Evaluation 🔎
 
 result: Fail ❌
 
@@ -63,7 +63,7 @@ result: Fail ❌
 
 | Asset Type | Asset Selection | Vulnerability Selection | Severity ⚠ | Operator  | Threshold 🛑 | Actual Count 📌 |
 | ---------- | --------------- | ----------------------- | ---------- | --------- | ----------- | -------------- |
-| ENDPOINT   | Any             | New                     | CRITICAL ️ | LESS_THAN | 3           | 3              |
+| ENDPOINT   | Any             | New                     | CRITICAL ️ | LESS_THAN | 3           | 3              |</details>
 
 # Response Summary per API
 
@@ -79,12 +79,3 @@ result: Fail ❌
 | ------ | -------- |
 | TLS    | 10       |
 | Jwt    | 31       |
-
-
-        <details>
-        <summary>Click to expand</summary>
-
-        This is some hidden content!
-
-        </details>
-        
