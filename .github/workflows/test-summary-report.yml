@@ -8,10 +8,10 @@ on:
 
 jobs:
   show_markdown:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       
       - name: Read_Markdown_File
         run: $(cat md_dump.md) >> $GITHUB_STEP_SUMMARY
