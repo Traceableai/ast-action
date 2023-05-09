@@ -176,11 +176,11 @@ runs:
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan initAndRun'
-        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
+        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -233,11 +233,11 @@ runs:
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan init '
-        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server'  '--scan-timeout' ' --reference-env' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
+        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--exclude-url-regex' '--target-url' '--traceable-server'  '--scan-timeout' ' --reference-env' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
