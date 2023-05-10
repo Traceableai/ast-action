@@ -25,6 +25,7 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
           output_format: 'md'
           output_file: ${{ env.OUTPUT_FILE_PATH }}
+          idle_timeout: '1'
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@main
@@ -34,8 +35,14 @@ jobs:
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       
+      # - name: Display Report
+      #   run: echo ${{ env.OUTPUT_FILE_PATH }} >> $GITHUB_STEP_SUMMARY
+
       - name: Display Report
-        run: echo ${{ env.OUTPUT_FILE_PATH }} >> $GITHUB_STEP_SUMMARY
+        run: |
+          report=$(cat ${{ env.OUTPUT_FILE_PATH }})
+          echo "::set-env name=GITHUB_STEP_SUMMARY::$report"
+        shell: bash
 
       
       # - name: Display Markdown File in Workflow Summary

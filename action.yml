@@ -125,6 +125,14 @@ inputs:
     required: false
     description: 'Traceable platform agent (TPA) reporting endpoint'
     default: 'localhost'
+  output_format:
+    required: false
+    description: 'Output format for summary report'
+    default: 'text'
+  output_file:
+    required: false
+    description: 'Output file for summary report'
+    default: 'NULL'
 
 runs:
   using: composite
