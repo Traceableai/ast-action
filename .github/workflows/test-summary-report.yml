@@ -34,218 +34,44 @@ jobs:
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-      
-      - name: Display Report
+
+      - name: Dump Summary
         run: |
-          md_content: |
-            <details><summary>Scan Details summary</summary>
+          scan_summary='''<details><summary>Scan Details summary</summary>
 
-# Scan Details 👀
+          # Scan Details 👀
 
-- Name: Open_API_Scan_1_20230510-043736
-- ID: 816f004f-0500-4bfb-8608-ea4f5102f972
-- Created at: 2023-05-10 04:37:54
-- Execution time: 7200256ms
-- Environment: ast_plugins
-- State: Completed
-- Scan initiation source: LI
-- Initiated by: at_enterprise_protection@traceabletest.ai
-</details>
+          - Name: Open_API_Scan_1_20230510-043736
+          - ID: 816f004f-0500-4bfb-8608-ea4f5102f972
+          - Created at: 2023-05-10 04:37:54
+          - Execution time: 7200256ms
+          - Environment: ast_plugins
+          - State: Completed
+          - Scan initiation source: LI
+          - Initiated by: at_enterprise_protection@traceabletest.ai
+          </details>
 
-<details><summary>Vulnerabilities summary</summary>
+          <details><summary>Vulnerabilities summary</summary>
 
-# Vulnerabilities 💀
+          # Vulnerabilities 💀
 
-| Plugin Category           | Plugin Subcategory                                                                   | Vulnerabilities Found 🎯 | Executed/Generated Tests 🏁 | Severity ⚠ |
-| ------------------------- | ------------------------------------------------------------------------------------ | ----------------------- | -------------------------- | ---------- |
-| Sql Injection             | Error Based SQL Injection                                                            | 0                       | 20/200                     | -          |
-| Json Web Token            | JWT Token Expiry                                                                     | 1                       | 4/4                        | Medium     |
-| TLS                       | Decrypting RSA using Obsolete and Weakened Encryption (DROWN)                        | 0                       | 1/1                        | -          |
-| TLS                       | SSL/TLS Expired Certificate                                                          | 0                       | 1/1                        | -          |
-| Remote Code Execution     | OS Command Injection                                                                 | 0                       | 0/480                      | -          |
-| Remote Code Execution     | Buffer Overflow                                                                      | 0                       | 0/14                       | -          |
-| NoSql Injection           | Blind NoSQL Injection                                                                | 0                       | 0/160                      | -          |
-| Json Web Token            | JWT Missing Audience Claim                                                           | 1                       | 2/2                        | Medium     |
-| Sql Injection             | Blind SQL Injection                                                                  | 0                       | 22/220                     | -          |
-| Data Exposure             | Excessive Data Exposure                                                              | 0                       | 0/3                        | -          |
-| Security Misconfiguration | Trace.axd Information Leak                                                           | 0                       | 0/98                       | -          |
-| TLS                       | Self Signed Certificate                                                              | 0                       | 1/1                        | -          |
-| Security Misconfiguration | Server Side Include                                                                  | 0                       | 0/98                       | -          |
-| Authorization             | Broken Object Level Authorization                                                    | 0                       | 2/20                       | -          |
-| TLS                       | Broken Certificate Chain                                                             | 0                       | 1/1                        | -          |
-| Security Misconfiguration | Server Version Disclosure                                                            | 0                       | 0/18                       | -          |
-| Insecure Design           | Insecure HTTP Method                                                                 | 0                       | 0/54                       | -          |
-| Json Web Token            | JWT Weak Algorithm                                                                   | 0                       | 2/2                        | -          |
-| TLS                       | Certificate Common Name Mismatch                                                     | 0                       | 1/1                        | -          |
-| Access Control            | Remote File Inclusion                                                                | 0                       | 0/334                      | -          |
-| Cross Site Scripting      | Reflected Cross Site Scripting                                                       | 0                       | 24/120                     | -          |
-| Insecure Design           | Regex DOS                                                                            | 0                       | 0/41                       | -          |
-| Security Misconfiguration | HTTP Only Site                                                                       | 0                       | 0/21                       | -          |
-| Authentication            | Weak Password                                                                        | 0                       | 0/1                        | -          |
-| Remote Code Execution     | Java Log4Shell                                                                       | 0                       | 0/136                      | -          |
-| TLS                       | SSL/TLS Diffie-Hellman Attack (Logjam)                                               | 0                       | 1/1                        | -          |
-| TLS                       | Browser Exploit Against SSL/TLS (BEAST)                                              | 0                       | 1/1                        | -          |
-| Remote Code Execution     | Integer Overflow Error                                                               | 0                       | 0/5                        | -          |
-| Business Logic            | Mass Assignment                                                                      | 0                       | 0/23                       | -          |
-| Improper Asset Management | Default Landing Page                                                                 | 0                       | 0/21                       | -          |
-| TLS                       | TLS Not Implemented                                                                  | 1                       | 1/1                        | Medium     |
-| Json Web Token            | JWT Weak Encryption                                                                  | 0                       | 2/2                        | -          |
-| TLS                       | Compression Ratio Info-leak Made Easy (CRIME)                                        | 0                       | 1/1                        | -          |
-| Business Logic            | Parameter Tampering                                                                  | 0                       | 0/6                        | -          |
-| TLS                       | SSL/TLS Weak Ciphers                                                                 | 0                       | 1/1                        | -          |
-| Json Web Token            | JWT Invalid Signature                                                                | 0                       | 2/2                        | -          |
-| TLS                       | Revoked Certificate                                                                  | 0                       | 1/1                        | -          |
-| TLS                       | Padding Oracle on Downgraded Legacy Encryption (POODLE) (CVE-2014-3566)              | 0                       | 1/1                        | -          |
-| Json Web Token            | JWT JKU Misuse                                                                       | 1                       | 2/2                        | Critical   |
-| TLS                       | TLS/DTLS CBC Attack (Lucky13) (CVE-2013-0169)                                        | 0                       | 1/1                        | -          |
-| Json Web Token            | JWT Algorithm Confusion                                                              | 1                       | 6/6                        | Critical   |
-| Authentication            | Unauthenticated Access                                                               | 0                       | 4/20                       | -          |
-| Improper Asset Management | Multiple Versions of API                                                             | 0                       | 0/33                       | -          |
-| Insecure Design           | Username and Password Enumeration                                                    | 0                       | 0/1                        | -          |
-| Security Misconfiguration | .env Information Leak                                                                | 0                       | 0/98                       | -          |
-| TLS                       | SWEET32 - Birthday attacks against TLS ciphers with 64bit block size (CVE-2016-2183) | 0                       | 1/1                        | -          |
-| Insecure Design           | Cloud Metadata Potentially Exposed                                                   | 0                       | 0/82                       | -          |
-| Insecure Design           | GET for POST                                                                         | 0                       | 0/10                       | -          |
-</details>
-
-<details><summary>Vulnerable Apis summary</summary>
-
-# Top vulnerable apis
-
-| Api Id                               | Service Id                           | Total Vulnerabilities | Open Vulnerabilities | Severity |
-| ------------------------------------ | ------------------------------------ | --------------------- | -------------------- | -------- |
-| 7365b1ae-50c8-320d-891f-13d63c8b315c | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 5                     | 5                    | Critical |
-| 46a5c0e9-bd30-381c-be98-35d71dd5b3fb | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 4                     | 4                    | Critical |
-</details>
-
-<details><summary>Apis summary</summary>
-
-# Api Results
-
-| Api Id                               | Service Id                           | Executed/Generated Tests | Total Vulnerabilities | Open Vulnerabilities | Severity |
-| ------------------------------------ | ------------------------------------ | ------------------------ | --------------------- | -------------------- | -------- |
-| 7365b1ae-50c8-320d-891f-13d63c8b315c | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 85/216                   | 5                     | 5                    | Critical |
-| 46a5c0e9-bd30-381c-be98-35d71dd5b3fb | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 21/131                   | 4                     | 4                    | Critical |
-| 5a39ea15-5c83-319e-97f7-4a3612a2ae5f | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/10                     | 0                     | 0                    | -        |
-| ec12c9d9-1b2c-3d75-ba8b-a97dae0fbf43 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/321                    | 0                     | 0                    | -        |
-| 9fc0daf5-251d-3501-94f0-32a47c03f2c9 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/50                     | 0                     | 0                    | -        |
-| e1470ae0-c1d6-361d-b186-afa67053cae2 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/53                     | 0                     | 0                    | -        |
-| 7749bef7-15ca-34f3-ad90-a5c1253376e5 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/111                    | 0                     | 0                    | -        |
-| c506e78f-3b32-316b-aa53-bf9334db6409 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/5                      | 0                     | 0                    | -        |
-| d1aa6735-7d19-3087-9cec-6dd9a4555da5 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/8                      | 0                     | 0                    | -        |
-| dcc0b4fb-9519-334b-afb3-d826f6073b20 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/5                      | 0                     | 0                    | -        |
-| 358e295f-8dc2-3bea-92ce-173db80a261a | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/1                      | 0                     | 0                    | -        |
-| e2dda200-ec24-3ef5-99b1-5bcae4055310 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/8                      | 0                     | 0                    | -        |
-| c71a7f28-3010-385b-844e-e076ef031871 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/5                      | 0                     | 0                    | -        |
-| eec68396-95d4-3a02-a2da-e88e3daddd18 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/126                    | 0                     | 0                    | -        |
-| f813cd23-70dc-32a2-a5c7-ed456a5e1d9f | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/41                     | 0                     | 0                    | -        |
-| 19ca3c0d-ac7a-3599-aa0e-ae1e30b58030 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/138                    | 0                     | 0                    | -        |
-| d08551c1-95c2-3b99-8281-3a2c8d698280 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/127                    | 0                     | 0                    | -        |
-| 9c892ea1-ebc8-3e23-960a-8f70cd6273ed | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/110                    | 0                     | 0                    | -        |
-| 3cea0070-08ac-3cbf-b6c9-efb27493923d | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/4                      | 0                     | 0                    | -        |
-| a481c47d-123a-3042-9993-221a1b56f450 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/4                      | 0                     | 0                    | -        |
-| 05ec3e63-2bd1-3283-b212-90ff89329aea | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/50                     | 0                     | 0                    | -        |
-| fc5ceb82-f5f6-30c8-84d9-7d9357e615f6 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/129                    | 0                     | 0                    | -        |
-| 6101f644-74d0-381a-871a-1cdebc226948 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/39                     | 0                     | 0                    | -        |
-| ef76441e-3344-3941-9859-deed131a462c | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/187                    | 0                     | 0                    | -        |
-| f0f3f257-cb40-38ae-bc75-7833ee10d1bf | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/52                     | 0                     | 0                    | -        |
-| 811d5dca-a891-334d-8f5a-953ff10e79fd | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/6                      | 0                     | 0                    | -        |
-| 0926ce37-6fe5-3c4e-b59b-5f89e93ec744 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/191                    | 0                     | 0                    | -        |
-| 9b1075ae-0893-381e-971c-08cf65d2a7b6 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/50                     | 0                     | 0                    | -        |
-| 5b05085b-69c5-3c8a-9eaa-ace3fcafd746 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/41                     | 0                     | 0                    | -        |
-| d68b42b2-2ea6-3481-ae2f-06b6bfc68afa | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/5                      | 0                     | 0                    | -        |
-| 0c84c1a1-aee9-3234-b67b-ed160ac4e7f4 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/41                     | 0                     | 0                    | -        |
-| f03bf8e9-22a4-36f5-8c22-232b3c6e83e5 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/5                      | 0                     | 0                    | -        |
-| ae465632-dec0-394a-a497-91ea4530f7ed | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/43                     | 0                     | 0                    | -        |
-| 12b0c6b5-8911-31fd-8753-fe87de3609b1 | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/7                      | 0                     | 0                    | -        |
-| f2849559-8cbf-3e44-9791-8eda26aa3f3b | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/6                      | 0                     | 0                    | -        |
-| f94939ca-a2f7-37c6-ab65-0af1a65ba05c | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/9                      | 0                     | 0                    | -        |
-| f05995d6-c56a-3e5f-9b71-be202ce5aa7c | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/8                      | 0                     | 0                    | -        |
-| f2f0f635-9212-365d-adbd-ee7656a1929f | 3c0133b9-b055-363f-838a-109fa7aef8f3 | 0/8                      | 0                     | 0                    | -        |
-</details>
-
-<details><summary>Scan Evaluation summary</summary>
-
-# Scan Evaluation 🔎
-
-result: Fail ❌
-
-## Failed rules 🚫
-
-| Asset Type | Asset Selection | Vulnerability Selection | Severity | Operator  | Threshold | Actual Count |
-| ---------- | --------------- | ----------------------- | -------- | --------- | --------- | ------------ |
-| 1          | All             | Any                     | CRITICAL | LESS_THAN | 1         | 2            |
-</details>
-        echo "${md_content}" >> $GITHUB_STEP_SUMMARY
-
-      # - name: Display Report
-      #   run: |
-      #     report=$(cat ${{ env.OUTPUT_FILE_PATH }})
-      #     echo "::set-env name=GITHUB_STEP_SUMMARY::$report"
-      #   shell: bash
-
-      
-      # - name: Display Markdown File in Workflow Summary
-      #   uses: actions/github-script@v3
-      #   with:
-      #     script: |
-      #       const markdown = '${{ steps.Read_Markdown_File.outputs.markdown }}';
-      #       github.workflow.update({
-      #         status: "completed",
-      #         conclusion: "success",
-      #         output: {
-      #           title: "My Markdown File",
-      #           summary: markdown
-      #         }
-      #       })
-  # generate-report:
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v3
-  #       with:
-  #         python-version: "3.9"
-
-  #     - name: Install dependencies
-  #       run: pip install junitparser
-
-  #     - name: Generate JUnit report
-  #       run: python generate_report.py
-
-  #     - name: Upload JUnit report
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: junit-report
-  #         path: report.xml
-
-  # display-report:
-  #   needs: generate-report
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # - name: Disable Debug Logs
-  #     #   env:
-  #     #     ACTIONS_STEP_DEBUG: 'false'
-
-  #     - name: Download JUnit report
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: junit-report
-
-  #     # - name: Debug report file
-  #     #   run: cat report.xml
-          
-  #     - name: Display JUnit report
-  #       uses: mikepenz/action-junit-report@v3
-  #       with:
-  #         report_paths: junit-report/report.xml
-
-  #     # - name: Publish JUnit test results
-  #     #   uses: EnricoMi/publish-unit-test-result-action@v2
-  #     #   # with:
-  #     #   #   test_results_files: report.xml
-  #     #   #   check_run_name: My Test Results
-  #     #   #   fail_on_error: true
-      
+          | Plugin Category           | Plugin Subcategory                                                                   | Vulnerabilities Found 🎯 | Executed/Generated Tests 🏁 | Severity ⚠ |
+          | ------------------------- | ------------------------------------------------------------------------------------ | ----------------------- | -------------------------- | ---------- |
+          | Sql Injection             | Error Based SQL Injection                                                            | 0                       | 20/200                     | -          |
+          | Json Web Token            | JWT Token Expiry                                                                     | 1                       | 4/4                        | Medium     |
+          | TLS                       | Decrypting RSA using Obsolete and Weakened Encryption (DROWN)                        | 0                       | 1/1                        | -          |
+          | TLS                       | SSL/TLS Expired Certificate                                                          | 0                       | 1/1                        | -          |
+          | Remote Code Execution     | OS Command Injection                                                                 | 0                       | 0/480                      | -          |
+          | Remote Code Execution     | Buffer Overflow                                                                      | 0                       | 0/14                       | -          |
+          | NoSql Injection           | Blind NoSQL Injection                                                                | 0                       | 0/160                      | -          |
+          | Json Web Token            | JWT Missing Audience Claim                                                           | 1                       | 2/2                        | Medium     |
+          | Sql Injection             | Blind SQL Injection                                                                  | 0                       | 22/220                     | -          |
+          | Data Exposure             | Excessive Data Exposure                                                              | 0                       | 0/3                        | -          |
+          | Security Misconfiguration | Trace.axd Information Leak                                                           | 0                       | 0/98                       | -          |
+          | TLS                       | Self Signed Certificate                                                              | 0                       | 1/1                        | -          |
+          | Security Misconfiguration | Server Side Include                                                                  | 0                       | 0/98                       | -          |
+          | Authorization             | Broken Object Level Authorization                                                    | 0                       | 2/20                       | -          |
+          | TLS                       | Broken Certificate Chain                                                             | 0                       | 1/1                        | -          |
+          | Security Misconfiguration | Server Version Disclosure
+          </details>'''
+          echo "${scan_summary}" >> $GITHUB_STEP_SUMMARY
