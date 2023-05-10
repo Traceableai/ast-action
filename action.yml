@@ -125,6 +125,14 @@ inputs:
     required: false
     description: 'Traceable platform agent (TPA) reporting endpoint'
     default: 'localhost'
+  output_format:
+    required: false
+    description: 'Out format for summary report'
+    default: 'md'
+  output_file:
+    required: false
+    description: 'Output file for summary report'
+    default: 'NULL'
 
 runs:
   using: composite
@@ -176,11 +184,11 @@ runs:
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan initAndRun'
-        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
+        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel' '--output-format' '--output-file')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}' '${{ inputs.output_format }}' '{{ inputs.output_file }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -276,11 +284,11 @@ runs:
         
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         scanRunCmd=$traceableCliBinaryLocation' ast scan run '
-        optionsArr=('--token' '--idle-timeout' '--max-retries' '--postman-collection' '--postman-environment')
+        optionsArr=('--token' '--idle-timeout' '--max-retries' '--postman-collection' '--postman-environment' '--output-format' '--output-file')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' 
+        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.output_format }}' '${{ inputs.output_file }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
