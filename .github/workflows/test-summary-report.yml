@@ -38,11 +38,11 @@ jobs:
       # - name: Display Report
       #   run: echo ${{ env.OUTPUT_FILE_PATH }} >> $GITHUB_STEP_SUMMARY
 
-      - name: Display Report
-        run: |
-          report=$(cat ${{ env.OUTPUT_FILE_PATH }})
-          echo "::set-env name=GITHUB_STEP_SUMMARY::$report"
-        shell: bash
+      # - name: Display Report
+      #   run: |
+      #     report=$(cat ${{ env.OUTPUT_FILE_PATH }})
+      #     echo "::set-env name=GITHUB_STEP_SUMMARY::$report"
+      #   shell: bash
 
       
       # - name: Display Markdown File in Workflow Summary
