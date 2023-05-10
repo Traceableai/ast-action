@@ -40,11 +40,11 @@ inputs:
   include_url_regex:
     required: false
     description: ''
-    default: 'NULL'
+    default: '.+'
   exclude_url_regex:
     required: false
     description: ''
-    default: 'NULL'
+    default: '.*(logout|health).*'
   include_endpoint_labels:
     required: false
     description: ''
@@ -127,8 +127,8 @@ inputs:
     default: 'localhost'
   output_format:
     required: false
-    description: 'Output format for summary report'
-    default: 'text'
+    description: 'Out format for summary report'
+    default: 'md'
   output_file:
     required: false
     description: 'Output file for summary report'
@@ -152,11 +152,11 @@ runs:
         else
           if [[ "${{ inputs.cli_version }}"  = *"-rc."* ]]
           then
-            curl -OL https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
+            curl -Lo traceableCli.tar.gz https://downloads.traceable.ai/cli/rc/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
           else
-            curl -OL https://downloads.traceable.ai/cli/release/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
+            curl -Lo traceableCli.tar.gz https://downloads.traceable.ai/cli/release/${{ inputs.cli_version }}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz
           fi
-          tar -xvf ${GITHUB_WORKSPACE}/traceable-cli-${{ inputs.cli_version }}-linux-x86_64.tar.gz --directory ${GITHUB_WORKSPACE}
+          tar -xvf traceableCli.tar.gz --directory ${GITHUB_WORKSPACE}
         fi
       shell: bash
     - name: Init and run command on cli
@@ -184,11 +184,11 @@ runs:
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan initAndRun'
-        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel' '--output-format' '--output-file')
+        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel' '--output-format' '--output-file')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}' '${{ inputs.output_format }}' '${{ inputs.output_file }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}' '${{ inputs.output_format }}' '{{ inputs.output_file }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -241,11 +241,11 @@ runs:
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan init '
-        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server'  '--scan-timeout' ' --reference-env' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
+        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--exclude-url-regex' '--target-url' '--traceable-server'  '--scan-timeout' ' --reference-env' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -284,11 +284,11 @@ runs:
         
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         scanRunCmd=$traceableCliBinaryLocation' ast scan run '
-        optionsArr=('--token' '--idle-timeout' '--max-retries' '--postman-collection' '--postman-environment')
+        optionsArr=('--token' '--idle-timeout' '--max-retries' '--postman-collection' '--postman-environment' '--output-format' '--output-file')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' 
+        for option in '${{ inputs.client_scan_token }}' '${{ inputs.idle_timeout }}' '${{ inputs.max_retries }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.output_format }}' '${{ inputs.output_file }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
@@ -301,25 +301,25 @@ runs:
         echo "Running cli command $scanRunCmd"
         $scanRunCmd
       shell: bash
-    # - name: Publish report
-    #   if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
-    #   run: |
-    #     export LC_ALL=en_US.utf-8
-    #     export LANG=en_US.utf-8
-    #     if [ -f "/tmp/ca_file.crt" ]
-    #     then
-    #       export TRACEABLE_ROOT_CA_FILE_NAME=/tmp/ca_file.crt
-    #     fi
-    #     if  [ -f "/tmp/ca_cert.crt" ]
-    #     then
-    #       export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
-    #     fi
-    #     if  [ -f "/tmp/ca_key.crt" ]
-    #     then
-    #       export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
-    #     fi        
-    #     ${GITHUB_WORKSPACE}/traceable ast scan report | sed 1,2d >> $GITHUB_STEP_SUMMARY
-    #   shell: bash
+    - name: Publish report
+      if: ${{ inputs.step_name == 'run' || inputs.step_name == 'init and run'}}
+      run: |
+        export LC_ALL=en_US.utf-8
+        export LANG=en_US.utf-8
+        if [ -f "/tmp/ca_file.crt" ]
+        then
+          export TRACEABLE_ROOT_CA_FILE_NAME=/tmp/ca_file.crt
+        fi
+        if  [ -f "/tmp/ca_cert.crt" ]
+        then
+          export TRACEABLE_CLI_CERT_FILE_NAME=/tmp/ca_cert.crt
+        fi
+        if  [ -f "/tmp/ca_key.crt" ]
+        then
+          export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
+        fi        
+        ${GITHUB_WORKSPACE}/traceable ast scan report --output-format '${{ inputs.output_format }}' | sed 1,2d >> $GITHUB_STEP_SUMMARY
+      shell: bash
     - name: Stop scan
       id: stop_scan
       if: ${{ inputs.step_name == 'stop' }}
