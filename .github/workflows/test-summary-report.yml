@@ -37,7 +37,8 @@ jobs:
       
       - name: Display Report
         run: |
-          md_content = '''<details><summary>Scan Details summary</summary>
+          md_content: |
+            <details><summary>Scan Details summary</summary>
 
 # Scan Details 👀
 
@@ -174,7 +175,7 @@ result: Fail ❌
 | Asset Type | Asset Selection | Vulnerability Selection | Severity | Operator  | Threshold | Actual Count |
 | ---------- | --------------- | ----------------------- | -------- | --------- | --------- | ------------ |
 | 1          | All             | Any                     | CRITICAL | LESS_THAN | 1         | 2            |
-</details>'''
+</details>
         echo "${md_content}" >> $GITHUB_STEP_SUMMARY
 
       # - name: Display Report
