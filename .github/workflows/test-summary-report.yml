@@ -9,12 +9,34 @@ on:
 jobs:
   show_markdown:
     runs-on: ubuntu-20.04
+    env:
+      OUTPUT_FILE_PATH: "summary_report.md"
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       
-      - name: Read_Markdown_File
-        run: echo "$(cat md_dump.md)" >> $GITHUB_STEP_SUMMARY
+      - name: Init and run scan action
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'init and run'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          cli_version: 'latest'
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          output_format: 'md'
+          output_file: ${{ env.OUTPUT_FILE_PATH }}
+      - name: Stop Scan
+        if: always()
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+      
+      - name: Display Report
+        run: echo ${{ env.OUTPUT_FILE_PATH }} >> $GITHUB_STEP_SUMMARY
+
       
       # - name: Display Markdown File in Workflow Summary
       #   uses: actions/github-script@v3

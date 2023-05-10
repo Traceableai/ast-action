@@ -1,10 +1,8 @@
 name: Test Traceable AST Init And Run Action
 on:
   push:
-    # branches:
-    #   - main
-    branches-ignore:
-      - summary-report-action
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
