@@ -20,11 +20,11 @@ jobs:
         with:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          cli_version: 'latest'
+          cli_version: '1.7.0'
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
           output_format: 'md'
-          output_file: ${{ env.OUTPUT_FILE_PATH }}
+          # output_file: ${{ env.OUTPUT_FILE_PATH }}
           idle_timeout: '1'
       - name: Stop Scan
         if: always()
@@ -34,44 +34,3 @@ jobs:
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-
-      - name: Dump Summary
-        run: |
-          scan_summary='''<details><summary>Scan Details summary</summary>
-
-          # Scan Details 👀
-
-          - Name: Open_API_Scan_1_20230510-043736
-          - ID: 816f004f-0500-4bfb-8608-ea4f5102f972
-          - Created at: 2023-05-10 04:37:54
-          - Execution time: 7200256ms
-          - Environment: ast_plugins
-          - State: Completed
-          - Scan initiation source: LI
-          - Initiated by: at_enterprise_protection@traceabletest.ai
-          </details>
-
-          <details><summary>Vulnerabilities summary</summary>
-
-          # Vulnerabilities 💀
-
-          | Plugin Category           | Plugin Subcategory                                                                   | Vulnerabilities Found 🎯 | Executed/Generated Tests 🏁 | Severity ⚠ |
-          | ------------------------- | ------------------------------------------------------------------------------------ | ----------------------- | -------------------------- | ---------- |
-          | Sql Injection             | Error Based SQL Injection                                                            | 0                       | 20/200                     | -          |
-          | Json Web Token            | JWT Token Expiry                                                                     | 1                       | 4/4                        | Medium     |
-          | TLS                       | Decrypting RSA using Obsolete and Weakened Encryption (DROWN)                        | 0                       | 1/1                        | -          |
-          | TLS                       | SSL/TLS Expired Certificate                                                          | 0                       | 1/1                        | -          |
-          | Remote Code Execution     | OS Command Injection                                                                 | 0                       | 0/480                      | -          |
-          | Remote Code Execution     | Buffer Overflow                                                                      | 0                       | 0/14                       | -          |
-          | NoSql Injection           | Blind NoSQL Injection                                                                | 0                       | 0/160                      | -          |
-          | Json Web Token            | JWT Missing Audience Claim                                                           | 1                       | 2/2                        | Medium     |
-          | Sql Injection             | Blind SQL Injection                                                                  | 0                       | 22/220                     | -          |
-          | Data Exposure             | Excessive Data Exposure                                                              | 0                       | 0/3                        | -          |
-          | Security Misconfiguration | Trace.axd Information Leak                                                           | 0                       | 0/98                       | -          |
-          | TLS                       | Self Signed Certificate                                                              | 0                       | 1/1                        | -          |
-          | Security Misconfiguration | Server Side Include                                                                  | 0                       | 0/98                       | -          |
-          | Authorization             | Broken Object Level Authorization                                                    | 0                       | 2/20                       | -          |
-          | TLS                       | Broken Certificate Chain                                                             | 0                       | 1/1                        | -          |
-          | Security Misconfiguration | Server Version Disclosure
-          </details>'''
-          echo "${scan_summary}" >> $GITHUB_STEP_SUMMARY
