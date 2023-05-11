@@ -17,7 +17,7 @@ jobs:
         with:
           step_name: 'init and run'
           client_scan_token: 'c98d186bbe1d08a0615008ca5c3e38935ee8ca58580ba7cf8f68b175077e74c735e4fd3eb20715f67acf2807bf2021556fdaa6678dbbd530c244892c21f12680'
-          cli_version: 'latest'
+          cli_version: '1.7.0'
           traffic_env: 'development'
           traceable_server: 'api-dev.traceable.ai'
           policy: 'livtr'
