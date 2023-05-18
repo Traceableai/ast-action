@@ -31,6 +31,7 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Check log files
         run: |
+          cd ..
           ls -la
           echo "hello" >> .traceable/agent.log
           cat -n .traceable/agent.log
