@@ -31,11 +31,16 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Check log files
         run: |
-          ls -la \
-          ls -la \home
-          ls -la \home\runner
-          ls -la \home\runner\work
-          ls -la \home\runner\work\_temp
+          cd ..
+          ls -la 
+          cd ..
+          ls -la
+          cd ..
+          ls -la 
+          cd ..
+          ls -la
+          cd ..
+          ls -la
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
