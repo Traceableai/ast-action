@@ -35,7 +35,7 @@ jobs:
       - name: Check log files
         run: |
           cd .github
-          ls -la
+          ls -la ~/.traceable
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
