@@ -35,6 +35,7 @@ jobs:
           ls -la \home
           ls -la \home\runner
           ls -la \home\runner\work
+          ls -la \home\runner\work\_temp
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
