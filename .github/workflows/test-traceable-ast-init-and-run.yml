@@ -31,7 +31,6 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Check log files
         run: |
-          cd .git
           ls -la
   functionalTest:
     runs-on: ubuntu-20.04
