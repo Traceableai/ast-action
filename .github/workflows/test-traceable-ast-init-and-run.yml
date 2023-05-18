@@ -10,6 +10,9 @@ jobs:
   InitAndRunAstScan:
     runs-on: ubuntu-20.04
     steps:
+      - name: test
+        run: |
+          ls -la
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init and run scan action
