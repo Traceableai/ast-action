@@ -31,9 +31,9 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Check log files
         run: |
-          ls -la /.traceable
-          echo "hello" >> .traceable/agent.log
-          cat -n .traceable/agent.log
+          ls -la \.traceable
+          echo "hello" >> \.traceable/agent.log
+          cat -n \.traceable\agent.log
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
