@@ -200,6 +200,14 @@ runs:
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
+        if [[ "${{ inputs.proxy_mode }}" == "true" ]]
+        then
+          export TRACEABLE_PROXY_HOST=localhost
+          export TRACEABLE_PROXY_PORT=18080
+          export TA_SERVICE_NAME="${{ inputs.ta_service_name }}"
+          unset http_proxy
+          scanInitCmd=$scanInitCmd" -tpa "${{ inputs.tpa_endpoint }}" --proxy"
+        fi
         for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}' '${{ inputs.logfile }}' '${{ inputs.agent_logfile }}' '${{ inputs.proxy_logfile }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
@@ -211,14 +219,14 @@ runs:
           iterator=$(($iterator+1))
         done
         
-        if [[ "${{ inputs.proxy_mode }}" == "true" ]]
-        then
-          export TRACEABLE_PROXY_HOST=localhost
-          export TRACEABLE_PROXY_PORT=18080
-          export TA_SERVICE_NAME="${{ inputs.ta_service_name }}"
-          unset http_proxy
-          scanInitCmd=$scanInitCmd" -tpa "${{ inputs.tpa_endpoint }}" --proxy"
-        fi
+        # if [[ "${{ inputs.proxy_mode }}" == "true" ]]
+        # then
+        #   export TRACEABLE_PROXY_HOST=localhost
+        #   export TRACEABLE_PROXY_PORT=18080
+        #   export TA_SERVICE_NAME="${{ inputs.ta_service_name }}"
+        #   unset http_proxy
+        #   scanInitCmd=$scanInitCmd" -tpa "${{ inputs.tpa_endpoint }}" --proxy"
+        # fi
         echo "Running cli command $scanInitCmd"
         $scanInitCmd
 
