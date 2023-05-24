@@ -20,6 +20,9 @@ jobs:
           cli_version: 'latest'
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          logfile: 'testlog'
+          agent_logfile: 'stdout'
+          proxy_logfile: 'stdout'
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@main
