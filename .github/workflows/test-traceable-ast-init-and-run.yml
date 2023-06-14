@@ -2,7 +2,7 @@ name: Test Traceable AST Init And Run Action
 on:
   push:
     branches:
-      - main
+      # - main
       - test-logs
   pull_request:
   workflow_dispatch:
@@ -22,8 +22,8 @@ jobs:
           traffic_env: 'crapi-demo1'
           traceable_server: 'api-dev.traceable.ai'
           logfile: 'stdout'
-          agent_logfile: 'stdout'
-          proxy_logfile: 'stdout'
+          # agent_logfile: 'stdout'
+          # proxy_logfile: 'stdout'
           proxy_mode: false
       - name: Stop Scan
         if: always()
