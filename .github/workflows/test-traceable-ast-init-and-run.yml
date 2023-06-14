@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - test-logs
   pull_request:
   workflow_dispatch:
 
@@ -16,14 +17,14 @@ jobs:
         uses: Traceableai/ast-action@main
         with:
           step_name: 'init and run'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          client_scan_token: 'ac5a2f5ba5d2d199100b3630249f703d7ecd3af6453aff07dda1a83a1ec8bb066121b1aa3acb1aab6573482327f9c10a5a77af6430aae8c39b9defadf5b34769'
           cli_version: 'latest'
           traffic_env: 'crapi-demo1'
-          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-          logfile: 'testlog'
+          traceable_server: 'api-dev.traceable.ai'
+          logfile: 'stdout'
           agent_logfile: 'stdout'
           proxy_logfile: 'stdout'
-          proxy_mode: true
+          proxy_mode: false
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@main
