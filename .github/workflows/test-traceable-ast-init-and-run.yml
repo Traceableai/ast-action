@@ -33,6 +33,10 @@ jobs:
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+      - name: Download logs
+        uses: actions/download-artifact@v2
+        with:
+          name: logs
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
