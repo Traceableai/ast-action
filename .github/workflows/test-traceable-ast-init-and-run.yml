@@ -24,7 +24,7 @@ jobs:
           logfile: 'stdout'
           agent_logfile: 'agentlogs'
           proxy_logfile: 'proxylogs'
-          proxy_mode: false
+          proxy_mode: true
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@main
