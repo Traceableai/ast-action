@@ -22,8 +22,8 @@ jobs:
           traffic_env: 'development'
           traceable_server: 'api-dev.traceable.ai'
           logfile: 'stdout'
-          agent_logfile: 'agentlogs'
-          proxy_logfile: 'proxylogs'
+          agent_logfile: 'stdout'
+          proxy_logfile: 'stdout'
           proxy_mode: true
       - name: Stop Scan
         if: always()
