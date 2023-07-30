@@ -340,5 +340,5 @@ runs:
         then
           export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
         fi        
-        ${GITHUB_WORKSPACE}/traceable ast scan stop
+        ${GITHUB_WORKSPACE}/traceable ast scan stop >/dev/null || true
       shell: bash
