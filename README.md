@@ -14,22 +14,26 @@ Traceable’s GitHub action can be used to continuously test your software build
 ## Getting started with Traceable AST action
 ### Understanding the inputs
 
-| **Input**               | **Description**                                                    |
-| ------------------- |--------------------------------------------------------------------|
-| step\_name          | Scan action: init/ run/ init and run/ stop.                        |
-| scan\_name          | Name of the scan                                                   |
-| client\_scan\_token | Access token from platform                                         |
-| cli\_version        | Version of CLI you want to use for AST. Current one is 1.0.0-rc.3. |
-| traffic\_env        | Environment from where AST should observe traffic.                 |
-| plugins             | List of plugins you want to run the AST scan for.                  |
-| include\_url\_regex | Include URL patterns to test.                                      |
-| exclude\_url\_regex | exclude URL patterns from scan.                                    |
-| target\_url         | Target URL for the tests.                                          |
-| traceable\_server   | URL for traceable server, not applicable for SaaS customers.       |
-| idle\_timeout       | Scan timeout for a scan when it goes in IDLE state.                |
-| scan\_timeout       | Scan timeout in general.                                           |
-| reference\_env      | Reference environment from where AST should pick up the API specs. |
-| max\_retries        | Max retries for the scan after failure.                            |
+| **Input**                       | **Description**                                                               |
+|---------------------------------|-------------------------------------------------------------------------------|
+| step\_name                      | Scan action: init/ run/ init and run/ stop.                                   |
+| scan\_name                      | Name of the scan                                                              |
+| client\_scan\_token             | Access token from platform                                                    |
+| cli\_version                    | Version of CLI you want to use for AST. Current one is 1.0.0-rc.3.            |
+| traffic\_env                    | Environment from where AST should observe traffic.                            |
+| plugins                         | List of plugins you want to run the AST scan for.                             |
+| include\_url\_regex             | Include URL patterns to test.                                                 |
+| exclude\_url\_regex             | exclude URL patterns from scan.                                               |
+| target\_url                     | Target URL for the tests.                                                     |
+| traceable\_server               | URL for traceable server, not applicable for SaaS customers.                  |
+| idle\_timeout                   | Scan timeout for a scan when it goes in IDLE state.                           |
+| scan\_timeout                   | Scan timeout in general.                                                      |
+| reference\_env                  | Reference environment from where AST should pick up the API specs.            |
+| max\_retries                    | Max retries for the scan after failure.                                       |
+| scan\_suite                     | AST suite name as defined on the Traceable.ai platform.                       |
+| graphql\_schema\_ids            | Comma separated GraphQl schema IDs uploaded on Traceable.ai platform.         |
+| graphql\_schema\_files          | Comma separated GraphQl SDL file paths.                                       |
+| graphql\_introspection\_enabled | Enables extracting the GraphQl Schema by running introspection on target-url. |
 
 
 ### Sample GitHub Action workflow
