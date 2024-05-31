@@ -151,11 +151,11 @@ inputs:
     default: 'NULL'
   graphql_schema_ids:
     required: false
-    description: 'GraphQl schema IDs updated on traceable platform'
+    description: 'comma separated GraphQl schema IDs updated on traceable platform'
     default: 'NULL'
   graphql_schema_files:
     required: false
-    description: 'GraphQl SDL file'
+    description: 'comma separated GraphQl SDL file paths'
     default: 'NULL'
   graphql_introspection_enabled:
     required: false
