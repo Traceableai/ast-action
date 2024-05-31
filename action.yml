@@ -147,15 +147,15 @@ inputs:
     default: 'NULL'
   scan_suite:
     required: false
-    description: 'AST suite name as defined on the Traceable platform'
+    description: 'AST suite name as defined on the Traceable.ai platform'
     default: 'NULL'
   graphql_schema_ids:
     required: false
-    description: 'comma separated GraphQl schema IDs updated on traceable platform'
+    description: 'Comma separated GraphQl schema IDs updated on Traceable.ai platform'
     default: 'NULL'
   graphql_schema_files:
     required: false
-    description: 'comma separated GraphQl SDL file paths'
+    description: 'Comma separated GraphQl SDL file paths'
     default: 'NULL'
   graphql_introspection_enabled:
     required: false
