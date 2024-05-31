@@ -151,7 +151,7 @@ inputs:
     default: 'NULL'
   graphql_schema_ids:
     required: false
-    description: 'Comma separated GraphQl schema IDs updated on Traceable.ai platform'
+    description: 'Comma separated GraphQl schema IDs uploaded on Traceable.ai platform'
     default: 'NULL'
   graphql_schema_files:
     required: false
