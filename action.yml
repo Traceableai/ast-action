@@ -145,7 +145,22 @@ inputs:
     required: false
     description: 'Output stream/file for traceable cli logs'
     default: 'NULL'
-
+  scan_suite:
+    required: false
+    description: 'AST suite name as defined on the Traceable platform'
+    default: 'NULL'
+  graphql_schema_ids:
+    required: false
+    description: 'GraphQl schema IDs updated on traceable platform'
+    default: 'NULL'
+  graphql_schema_files:
+    required: false
+    description: 'GraphQl SDL file'
+    default: 'NULL'
+  graphql_introspection_enabled:
+    required: false
+    description: 'Enables extracting the GraphQl Schema by running introspection on target-url'
+    default: 'false'
 runs:
   using: composite
   steps:
@@ -196,11 +211,11 @@ runs:
         traceableCliBinaryLocation=${GITHUB_WORKSPACE}/traceable
         
         scanInitCmd=$traceableCliBinaryLocation' ast scan initAndRun'
-        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel' '--logfile' '--agent-logfile' '--proxy-logfile')
+        optionsArr=('--scan-name' '--traffic-env' '--token' '--plugins' '--include-url-regex' '--exclude-url-regex' '--target-url' '--traceable-server' '--idle-timeout' '--scan-timeout' ' --reference-env' '--max-retries' '--openapi-spec-ids' '--openapi-spec-files' '--policy' '--postman-collection' '--postman-environment' '--include-endpoint-labels' '--exclude-endpoint-labels' '--include-endpoint-with-owner-attributes' '--include-endpoint-owners' '--loglevel' '--logfile' '--agent-logfile' '--proxy-logfile' '--scan-suite' '--graphql-schema-ids' '--graphql-schema-files' '--graphql-introspection-enabled')
         
         #Iterating the options available from options array and filling them with the arguments received in order
         iterator=0
-        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}' '${{ inputs.logfile }}' '${{ inputs.agent_logfile }}' '${{ inputs.proxy_logfile }}'
+        for option in '${{ inputs.scan_name }}' '${{ inputs.traffic_env }}' '${{ inputs.client_scan_token }}' '${{ inputs.plugins }}' '${{ inputs.include_url_regex }}' '${{ inputs.exclude_url_regex }}' '${{ inputs.target_url }}' '${{ inputs.traceable_server }}' '${{ inputs.idle_timeout }}' '${{ inputs.scan_timeout }}' '${{ inputs.reference_env }}' '${{ inputs.max_retries }}' '${{ inputs.openapi_spec_ids }}' '${{ inputs.openapi_spec_files }}' '${{ inputs.policy }}' '${{ inputs.postman_collection }}' '${{ inputs.postman_environment }}' '${{ inputs.include_endpoint_labels}}' '${{ inputs.exclude_endpoint_labels }}' '${{ inputs.include_endpoint_with_owner_attributes }}' '${{ inputs.include_endpoint_owners }}' '${{ inputs.log_level }}' '${{ inputs.logfile }}' '${{ inputs.agent_logfile }}' '${{ inputs.proxy_logfile }}' '${{ inputs.scan_suite }}' '${{ inputs.graphql_schema_ids }}' '${{ inputs.graphql_schema_files }}' '${{ inputs.graphql_introspection_enabled }}'
         do
           if [ -z "$option" ] || [ "$option" = "''" ] || [ "$option" = "NULL" ]
           then
