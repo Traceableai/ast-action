@@ -160,7 +160,7 @@ inputs:
   graphql_introspection_enabled:
     required: false
     description: 'Enables extracting the GraphQl Schema by running introspection on target-url'
-    default: 'false'
+    default: 'NULL'
 runs:
   using: composite
   steps:
