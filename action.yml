@@ -168,6 +168,9 @@ runs:
       run: |
         [[ "${{ inputs.step_name }}" != "NULL" ]] || { echo "step name input is empty" ; exit 1; }
         [[ "${{ inputs.client_scan_token }}" != "NULL" ]] || { echo "client_scan_token input is empty" ; exit 1; }
+        if [[ "${{ inputs.graphql_introspection_enabled }}" == "true" ]]; then
+                  [[ "${{ inputs.target_url }}" != "NULL" ]] || { echo "target_url is required when graphql_introspection_enabled is true" ; exit 1; }
+                fi
       shell: bash
     - name: Download CLI
       if: ${{ inputs.step_name == 'init' || inputs.step_name == 'init and run' }}
