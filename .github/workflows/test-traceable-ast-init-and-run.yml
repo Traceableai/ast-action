@@ -16,10 +16,11 @@ jobs:
         uses: Traceableai/ast-action@main
         with:
           step_name: 'init and run'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          client_scan_token: 'c98d186bbe1d08a0615008ca5c3e38935ee8ca58580ba7cf8f68b175077e74c735e4fd3eb20715f67acf2807bf2021556fdaa6678dbbd530c244892c21f12680'
           cli_version: 'latest'
-          traffic_env: 'crapi-demo1'
-          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          traffic_env: 'development'
+          traceable_server: 'api-dev.traceable.ai'
+          policy: 'livtr'
       - name: Stop Scan
         if: always()
         uses: Traceableai/ast-action@main
