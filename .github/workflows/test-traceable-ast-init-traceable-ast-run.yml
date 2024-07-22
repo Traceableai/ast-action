@@ -16,7 +16,7 @@ jobs:
         with:
           step_name: 'init'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-          traffic_env: 'samarth-crapi'
+          traffic_env: 'staging'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
           traceable_cli_download_path: https://downloads.traceable.ai/cli/rc/latest/traceable-cli-latest-linux-x86_64.tar.gz
       - name: Run a loop as functional test
@@ -30,7 +30,7 @@ jobs:
         with:
           step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-          traffic_env: 'samarth-crapi'
+          traffic_env: 'staging'
           cli_version: 'latest'
       - name: Abort Scan
         uses: Traceableai/ast-action@main
@@ -38,5 +38,5 @@ jobs:
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          traffic_env: 'crapi-demo1'
+          traffic_env: 'staging'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
