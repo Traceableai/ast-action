@@ -18,7 +18,6 @@ jobs:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: 'latest'
-          traffic_env: 'crapi-demo1'
           scan_suite: 'github-actions-test-suite'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
@@ -27,7 +26,6 @@ jobs:
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
   functionalTest:
     runs-on: ubuntu-20.04
