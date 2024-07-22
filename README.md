@@ -125,6 +125,46 @@ jobs:
           done
 
 ```
+```
+name: Test Traceable AST Init And Run Action With AST Scan Suite
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  InitAndRunAstScan:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Init and run scan action
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'init and run'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          cli_version: 'latest'
+          scan_suite: 'github-actions-test-suite'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+      - name: Stop Scan
+        if: always()
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+  functionalTest:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Run a loop as functional test
+        run: |
+          for ((i=1;i<=100;i++)); 
+          do 
+             echo $i
+          done
+```
 2. As you can see in the above workflow, we have initiated the scan with initiate scan action step which takes client_scan_token, traffic_env, and traceable_server as input. 
 3. In the next step we are executing functional tests and then running the scan in the step after that which take client_scan_token,traffic_env, and cli_version as input. 
 
