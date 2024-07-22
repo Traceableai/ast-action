@@ -166,7 +166,7 @@ jobs:
           done
 ```
 2. As you can see in the above workflow, we have initiated the scan with initiate scan action step which takes client_scan_token, traffic_env, and traceable_server as input. You can configure other parameters as well as mentioned in the documentation.
-3. Alternatively you can create a scan-suite on the Traceable.AI Platform and configure aseets, attacks, evaluation criteria etc on the platform itself. You can spawn a scan from the suite configuration by specifiying the `scan_suite` parameter with value as suite name.
+3. Alternatively you can create a scan-suite on the Traceable.AI Platform and configure assets, attacks, evaluation criteria etc. on the platform itself. You can spawn a scan from the suite configuration by specifying just the `scan_suite` parameter with value as suite name.
 3. In the next step we are executing functional tests and then running the scan in the step after that which take client_scan_token,traffic_env, and cli_version as input. 
 
 
