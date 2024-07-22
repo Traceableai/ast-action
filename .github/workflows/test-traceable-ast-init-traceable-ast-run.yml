@@ -15,6 +15,7 @@ jobs:
         uses: Traceableai/ast-action@main
         with:
           step_name: 'init'
+          log_level: 'debug'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'staging'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
