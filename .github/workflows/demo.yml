@@ -18,7 +18,7 @@ jobs:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: 'latest'
-          scan_suite: 'github-actions-repo-suite'
+          scan_suite: 'demo-suite'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
         if: always()
