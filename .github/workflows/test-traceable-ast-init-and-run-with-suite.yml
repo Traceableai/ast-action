@@ -1,4 +1,4 @@
-name: Test Traceable AST Init And Run Action
+name: Test Traceable AST Init And Run Action With AST Scan Suite
 on:
   push:
     branches:
@@ -18,7 +18,7 @@ jobs:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: '1.10.2-rc.23'
-          traffic_env: 'staging'
+          scan_suite: 'github-actions-repo-suite'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
       - name: Stop Scan
         if: always()
@@ -26,7 +26,6 @@ jobs:
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          traffic_env: 'staging'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
   functionalTest:
     runs-on: ubuntu-20.04
