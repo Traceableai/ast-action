@@ -38,7 +38,7 @@ Traceable’s GitHub action can be used to continuously test your software build
 
 ### Sample GitHub Action workflow
 1. Here are the sample GitHub actions workflows which shows how you can configure the AST GitHub action. 
-```
+```yaml
 name: Test Traceable AST Init Action And Traceable AST Run Action
 on:
   push:
@@ -83,7 +83,7 @@ jobs:
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
 ```
 
-```
+```yaml
 name: Test Traceable AST Init And Run Action
 on:
   push:
