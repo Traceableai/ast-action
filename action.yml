@@ -338,7 +338,7 @@ runs:
         then
           export TRACEABLE_CLI_KEY_FILE_NAME=/tmp/ca_key.crt
         fi        
-        ${GITHUB_WORKSPACE}/traceable ast scan report --exit-code --output-format '${{ inputs.output_format }}' | sed 1,2d >> $GITHUB_STEP_SUMMARY
+        ${GITHUB_WORKSPACE}/traceable ast scan report --exit-code --output-format json | sed 1,2d >> $GITHUB_STEP_SUMMARY
       shell: bash
     - name: Stop scan
       id: stop_scan
