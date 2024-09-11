@@ -128,7 +128,7 @@ inputs:
   output_format:
     required: false
     description: 'Out format for summary report'
-    default: 'md'
+    default: 'json'
   output_file:
     required: false
     description: 'Output file for summary report'
