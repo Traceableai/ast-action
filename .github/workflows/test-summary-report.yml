@@ -1,0 +1,36 @@
+name: Test summary report
+on:
+  push:
+    branches:
+      - summary-report-action
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  show_markdown:
+    runs-on: ubuntu-20.04
+    env:
+      OUTPUT_FILE_PATH: "summary_report.md"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      
+      - name: Init and run scan action
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'init and run'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          cli_version: '1.7.0'
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          output_format: 'md'
+          # output_file: ${{ env.OUTPUT_FILE_PATH }}
+          idle_timeout: '1'
+      - name: Stop Scan
+        if: always()
+        uses: Traceableai/ast-action@main
+        with:
+          step_name: 'stop'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
+          traffic_env: 'crapi-demo1'
+          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
