@@ -10,24 +10,32 @@ jobs:
   InitAndRunAstScan:
     runs-on: ubuntu-20.04
     steps:
+      - name: test
+        run: |
+          ls -la
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init and run scan action
-        uses: Traceableai/ast-action@main
+        uses: Traceableai/ast-action@test3
         with:
           step_name: 'init and run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           cli_version: 'latest'
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          idle_timeout: 1
       - name: Stop Scan
         if: always()
-        uses: Traceableai/ast-action@main
+        uses: Traceableai/ast-action@test3
         with:
           step_name: 'stop'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+      - name: Check log files
+        run: |
+          cd .github
+          ls -la ~/.traceable
   functionalTest:
     runs-on: ubuntu-20.04
     steps:
