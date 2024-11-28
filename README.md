@@ -126,7 +126,9 @@ jobs:
 
 ```
 2. As you can see in the above workflow, we have initiated the scan with initiate scan action step which takes client_scan_token, traffic_env, and traceable_server as input. 
-3. In the next step we are executing functional tests and then running the scan in the step after that which take client_scan_token,traffic_env, and cli_version as input. 
+3. In the next step we are executing functional tests and then running the scan in the step after that which take client_scan_token,traffic_env, and cli_version as input.
+
+   
 
 
 
