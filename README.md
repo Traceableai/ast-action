@@ -28,27 +28,34 @@ The CLI binary is downloaded once per job and reused across all actions:
 
 | Input | Required | Default | Description |
 |---|---|---|---|
-| `scan_name` | yes | — | Name of the scan |
+| `scan_name` | no* | — | Name of the scan |
+| `scan_id` | no* | — | ID of the scan config |
 | `client_scan_token` | yes | — | Access token from platform |
 | `traceable_server` | yes | — | Platform URL |
 | `cli_version` | no | `latest` | CLI version |
 | `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
 
+\* At least one of `scan_name` or `scan_id` must be provided.
+
 ### queue-scan
 
 | Input | Required | Default | Description |
 |---|---|---|---|
-| `scan_name` | yes | — | Name of the scan |
+| `scan_name` | no* | — | Name of the scan |
+| `scan_id` | no* | — | ID of the scan config |
 | `client_scan_token` | yes | — | Access token from platform |
 | `traceable_server` | yes | — | Platform URL |
 | `cli_version` | no | `latest` | CLI version |
 | `runner_ids` | no | — | Comma-separated runner IDs (defaults to `any_runner`) |
 | `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
 
+\* At least one of `scan_name` or `scan_id` must be provided.
+
 ### report
 
 | Input | Required | Default | Description |
 |---|---|---|---|
+| `id` | no | — | Scan run ID (if omitted, auto-resolved from `.traceable` folder) |
 | `client_scan_token` | yes | — | Access token from platform |
 | `traceable_server` | yes | — | Platform URL |
 | `cli_version` | no | `latest` | CLI version |
@@ -59,10 +66,13 @@ The CLI binary is downloaded once per job and reused across all actions:
 
 | Input | Required | Default | Description |
 |---|---|---|---|
+| `id` | no | — | Scan run ID (if omitted, auto-resolved from `.traceable` folder) |
 | `client_scan_token` | yes | — | Access token from platform |
 | `traceable_server` | yes | — | Platform URL |
 | `cli_version` | no | `latest` | CLI version |
 | `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
+
+> **Note:** Any file paths passed via `additional_cli_options` should be relative to the repository root, since that's the working directory on the runner.
 
 ---
 

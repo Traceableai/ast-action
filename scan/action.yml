@@ -37,10 +37,16 @@ runs:
         else
           echo "CLI binary not found, downloading..."
           CLI_VERSION="${{ inputs.cli_version }}"
+          RAW_ARCH=$(uname -m)
+          case "$RAW_ARCH" in
+            x86_64)  ARCH="x86_64" ;;
+            aarch64|arm64) ARCH="aarch64" ;;
+            *) echo "::error::Unsupported architecture: $RAW_ARCH"; exit 1 ;;
+          esac
           if [[ "$CLI_VERSION" = *"-rc."* ]]; then
-            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-x86_64.tar.gz"
+            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
           else
-            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-x86_64.tar.gz"
+            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
           fi
           tar -xvf traceableCli.tar.gz --directory "${GITHUB_WORKSPACE}"
           rm -f traceableCli.tar.gz
@@ -66,9 +72,11 @@ runs:
           SCAN_IDENTITY="${SCAN_IDENTITY} --scan-id '${{ inputs.scan_id }}'"
         fi
 
+        CLI_OPTS=$(echo "${{ inputs.additional_cli_options }}" | tr '\n' ' ')
+
         ${GITHUB_WORKSPACE}/traceable ast scan initAndRun \
           ${SCAN_IDENTITY} \
           --token '${{ inputs.client_scan_token }}' \
           --traceable-server '${{ inputs.traceable_server }}' \
-          ${{ inputs.additional_cli_options }}
+          ${CLI_OPTS}
       shell: bash
