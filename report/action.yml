@@ -1,0 +1,66 @@
+---
+name: Traceable AST Report
+description: "Generate and publish a Traceable AST scan report"
+branding:
+  icon: 'activity'
+  color: 'red'
+inputs:
+  id:
+    required: false
+    description: 'Scan run ID to report on (if omitted, CLI reads from .traceable folder)'
+    default: ''
+  client_scan_token:
+    required: true
+    description: 'Access token from platform'
+  traceable_server:
+    required: true
+    description: 'Platform URL'
+  cli_version:
+    required: false
+    description: 'CLI version (only matters if CLI not yet downloaded)'
+    default: 'latest'
+  output_format:
+    required: false
+    description: 'Report format'
+    default: 'md'
+  additional_cli_options:
+    required: false
+    description: 'Extra CLI flags'
+    default: ''
+runs:
+  using: composite
+  steps:
+    - name: Download CLI (if missing)
+      run: |
+        if [ -f "${GITHUB_WORKSPACE}/traceable" ]; then
+          echo "CLI binary already exists, skipping download."
+        else
+          echo "CLI binary not found, downloading..."
+          CLI_VERSION="${{ inputs.cli_version }}"
+          if [[ "$CLI_VERSION" = *"-rc."* ]]; then
+            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-x86_64.tar.gz"
+          else
+            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-x86_64.tar.gz"
+          fi
+          tar -xvf traceableCli.tar.gz --directory "${GITHUB_WORKSPACE}"
+          rm -f traceableCli.tar.gz
+        fi
+      shell: bash
+    - name: Publish report
+      run: |
+        export LC_ALL=en_US.utf-8
+        export LANG=en_US.utf-8
+
+        ID_FLAG=""
+        if [ -n "${{ inputs.id }}" ]; then
+          ID_FLAG="--id '${{ inputs.id }}'"
+        fi
+
+        ${GITHUB_WORKSPACE}/traceable ast scan report \
+          --token '${{ inputs.client_scan_token }}' \
+          --traceable-server '${{ inputs.traceable_server }}' \
+          --output-format '${{ inputs.output_format }}' \
+          ${ID_FLAG} \
+          ${{ inputs.additional_cli_options }} \
+          | sed 1,2d >> $GITHUB_STEP_SUMMARY
+      shell: bash

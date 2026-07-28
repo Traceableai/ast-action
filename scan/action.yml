@@ -1,0 +1,74 @@
+---
+name: Traceable AST Scan
+description: "Run a Traceable AST scan using initAndRun"
+branding:
+  icon: 'activity'
+  color: 'red'
+inputs:
+  scan_name:
+    required: false
+    description: 'Name of the scan'
+    default: ''
+  scan_id:
+    required: false
+    description: 'ID of the scan'
+    default: ''
+  client_scan_token:
+    required: true
+    description: 'Access token from platform'
+  traceable_server:
+    required: true
+    description: 'Platform URL'
+  cli_version:
+    required: false
+    description: 'CLI version (only matters on first action in job)'
+    default: 'latest'
+  additional_cli_options:
+    required: false
+    description: 'Freeform string appended to CLI command for advanced flags'
+    default: ''
+runs:
+  using: composite
+  steps:
+    - name: Download CLI (if missing)
+      run: |
+        if [ -f "${GITHUB_WORKSPACE}/traceable" ]; then
+          echo "CLI binary already exists, skipping download."
+        else
+          echo "CLI binary not found, downloading..."
+          CLI_VERSION="${{ inputs.cli_version }}"
+          if [[ "$CLI_VERSION" = *"-rc."* ]]; then
+            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-x86_64.tar.gz"
+          else
+            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-x86_64.tar.gz"
+          fi
+          tar -xvf traceableCli.tar.gz --directory "${GITHUB_WORKSPACE}"
+          rm -f traceableCli.tar.gz
+        fi
+      shell: bash
+    - name: Validate scan identity
+      run: |
+        if [ -z "${{ inputs.scan_name }}" ] && [ -z "${{ inputs.scan_id }}" ]; then
+          echo "::error::At least one of 'scan_name' or 'scan_id' must be provided."
+          exit 1
+        fi
+      shell: bash
+    - name: Run initAndRun scan
+      run: |
+        export LC_ALL=en_US.utf-8
+        export LANG=en_US.utf-8
+
+        SCAN_IDENTITY=""
+        if [ -n "${{ inputs.scan_name }}" ]; then
+          SCAN_IDENTITY="--scan-name '${{ inputs.scan_name }}'"
+        fi
+        if [ -n "${{ inputs.scan_id }}" ]; then
+          SCAN_IDENTITY="${SCAN_IDENTITY} --scan-id '${{ inputs.scan_id }}'"
+        fi
+
+        ${GITHUB_WORKSPACE}/traceable ast scan initAndRun \
+          ${SCAN_IDENTITY} \
+          --token '${{ inputs.client_scan_token }}' \
+          --traceable-server '${{ inputs.traceable_server }}' \
+          ${{ inputs.additional_cli_options }}
+      shell: bash
