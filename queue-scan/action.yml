@@ -27,6 +27,18 @@ inputs:
     required: false
     description: 'Comma-separated runner IDs. If absent, CLI defaults to any_runner'
     default: ''
+  wait:
+    required: false
+    description: 'Wait for the queued scan to complete before exiting'
+    default: 'true'
+  wait_timeout:
+    required: false
+    description: 'Maximum time in minutes to wait for scan completion'
+    default: ''
+  summary:
+    required: false
+    description: 'Write scan report to GitHub job summary'
+    default: 'true'
   additional_cli_options:
     required: false
     description: 'Freeform string appended to CLI command for advanced flags'
@@ -48,9 +60,9 @@ runs:
             *) echo "::error::Unsupported architecture: $RAW_ARCH"; exit 1 ;;
           esac
           if [[ "$CLI_VERSION" = *"-rc."* ]]; then
-            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
+            curl -fsSLo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
           else
-            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
+            curl -fsSLo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
           fi
           tar -xvf traceableCli.tar.gz --directory "${GITHUB_WORKSPACE}"
           rm -f traceableCli.tar.gz
@@ -70,23 +82,42 @@ runs:
 
         SCAN_IDENTITY=""
         if [ -n "${{ inputs.scan_name }}" ]; then
-          SCAN_IDENTITY="--scan-name '${{ inputs.scan_name }}'"
+          SCAN_IDENTITY="--scan-name ${{ inputs.scan_name }}"
         fi
         if [ -n "${{ inputs.scan_id }}" ]; then
-          SCAN_IDENTITY="${SCAN_IDENTITY} --scan-id '${{ inputs.scan_id }}'"
+          SCAN_IDENTITY="${SCAN_IDENTITY} --scan-id ${{ inputs.scan_id }}"
         fi
 
         RUNNER_IDS_FLAG=""
         if [ -n "${{ inputs.runner_ids }}" ]; then
-          RUNNER_IDS_FLAG="--runner-ids '${{ inputs.runner_ids }}'"
+          RUNNER_IDS_FLAG="--runner-ids ${{ inputs.runner_ids }}"
+        fi
+
+        WAIT_FLAGS=""
+        if [ "${{ inputs.wait }}" = "true" ]; then
+          WAIT_FLAGS="--wait"
+          if [ -n "${{ inputs.wait_timeout }}" ]; then
+            WAIT_FLAGS="${WAIT_FLAGS} --wait-timeout ${{ inputs.wait_timeout }}"
+          fi
         fi
 
         CLI_OPTS=$(echo "${{ inputs.additional_cli_options }}" | tr '\n' ' ')
 
-        ${GITHUB_WORKSPACE}/traceable ast scan queue \
-          ${SCAN_IDENTITY} \
-          --token '${{ inputs.client_scan_token }}' \
-          --traceable-server '${{ inputs.traceable_server }}' \
-          ${RUNNER_IDS_FLAG} \
-          ${CLI_OPTS}
+        if [ "${{ inputs.summary }}" = "true" ] && [ "${{ inputs.wait }}" = "true" ]; then
+          ${GITHUB_WORKSPACE}/traceable ast scan queue \
+            ${SCAN_IDENTITY} \
+            --token ${{ inputs.client_scan_token }} \
+            --traceable-server ${{ inputs.traceable_server }} \
+            ${RUNNER_IDS_FLAG} \
+            ${WAIT_FLAGS} \
+            ${CLI_OPTS} >> $GITHUB_STEP_SUMMARY
+        else
+          ${GITHUB_WORKSPACE}/traceable ast scan queue \
+            ${SCAN_IDENTITY} \
+            --token ${{ inputs.client_scan_token }} \
+            --traceable-server ${{ inputs.traceable_server }} \
+            ${RUNNER_IDS_FLAG} \
+            ${WAIT_FLAGS} \
+            ${CLI_OPTS}
+        fi
       shell: bash

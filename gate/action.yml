@@ -40,9 +40,9 @@ runs:
             *) echo "::error::Unsupported architecture: $RAW_ARCH"; exit 1 ;;
           esac
           if [[ "$CLI_VERSION" = *"-rc."* ]]; then
-            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
+            curl -fsSLo traceableCli.tar.gz "https://downloads.traceable.ai/cli/rc/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
           else
-            curl -Lo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
+            curl -fsSLo traceableCli.tar.gz "https://downloads.traceable.ai/cli/release/${CLI_VERSION}/traceable-cli-${CLI_VERSION}-linux-${ARCH}.tar.gz"
           fi
           tar -xvf traceableCli.tar.gz --directory "${GITHUB_WORKSPACE}"
           rm -f traceableCli.tar.gz
@@ -55,14 +55,14 @@ runs:
 
         ID_FLAG=""
         if [ -n "${{ inputs.id }}" ]; then
-          ID_FLAG="--id '${{ inputs.id }}'"
+          ID_FLAG="--id ${{ inputs.id }}"
         fi
 
         CLI_OPTS=$(echo "${{ inputs.additional_cli_options }}" | tr '\n' ' ')
 
-        ${GITHUB_WORKSPACE}/traceable ast scan report \
-          --token '${{ inputs.client_scan_token }}' \
-          --traceable-server '${{ inputs.traceable_server }}' \
+        ${GITHUB_WORKSPACE}/traceable ast scan getEvaluationResult \
+          --token ${{ inputs.client_scan_token }} \
+          --traceable-server ${{ inputs.traceable_server }} \
           ${ID_FLAG} \
           ${CLI_OPTS}
       shell: bash
