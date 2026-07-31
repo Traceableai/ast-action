@@ -7,12 +7,12 @@ on:
 
 jobs:
   AstScan:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Init scan action
-        uses: Traceableai/ast-action@main
+        uses: ./
         with:
           step_name: 'init'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
@@ -26,14 +26,14 @@ jobs:
              echo $i
           done
       - name: Run scan action
-        uses: Traceableai/ast-action@main
+        uses: ./
         with:
           step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
           traffic_env: 'samarth-crapi'
           cli_version: 'latest'
       - name: Abort Scan
-        uses: Traceableai/ast-action@main
+        uses: ./
         if: always()
         with:
           step_name: 'stop'

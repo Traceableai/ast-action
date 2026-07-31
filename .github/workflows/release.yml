@@ -1,0 +1,74 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Major.Minor version (e.g., "2.0")'
+        required: true
+        type: string
+
+concurrency:
+  group: release-${{ github.event.inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Validate version format
+        run: |
+          VERSION="${{ inputs.version }}"
+          if ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+$'; then
+            echo "::error::Invalid version format. Expected 'major.minor' (e.g., '2.0'), got '$VERSION'"
+            exit 1
+          fi
+          echo "Version format is valid: $VERSION"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
+      - name: Calculate next patch version
+        id: version
+        run: |
+          MAJOR_MINOR="${{ inputs.version }}"
+          LATEST_PATCH=$(git tag -l "v${MAJOR_MINOR}.*" | sed "s/v${MAJOR_MINOR}\.//" | sort -n | tail -1)
+          if [ -z "$LATEST_PATCH" ]; then
+            NEXT_PATCH=0
+          else
+            NEXT_PATCH=$((LATEST_PATCH + 1))
+          fi
+          FULL_VERSION="${MAJOR_MINOR}.${NEXT_PATCH}"
+          echo "version=${FULL_VERSION}" >> $GITHUB_OUTPUT
+          echo "Releasing v${FULL_VERSION}"
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Create version tag
+        run: |
+          git tag "v${{ steps.version.outputs.version }}" -m "Release v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"
+
+      - name: Move floating major tag
+        run: |
+          MAJOR=$(echo "${{ inputs.version }}" | cut -d. -f1)
+          git tag -f "v${MAJOR}" -m "Release v${{ steps.version.outputs.version }}"
+          git push origin "v${MAJOR}" --force
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ steps.version.outputs.version }}" \
+            --title "v${{ steps.version.outputs.version }}" \
+            --generate-notes
