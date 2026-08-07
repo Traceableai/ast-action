@@ -42,6 +42,7 @@ jobs:
           additional_cli_options: |
             --target-url https://echo.free.beeceptor.com
             --hook-names souvik_hook,test-souvik
+            --openapi-spec-files test-fixtures/spec_a_users.json
 
       - name: Report step
         uses: Traceableai/ast-action/report@v2/overrides-01
@@ -77,6 +78,8 @@ jobs:
           summary: 'false'                   # report action writes the job summary
           additional_cli_options: |
             --target-url https://echo.free.beeceptor.com
+            --hook-names souvik_hook,test-souvik
+            --openapi-spec-files test-fixtures/spec_a_users.json
 
       - name: Publish report
         uses: Traceableai/ast-action/report@v2/overrides-01
