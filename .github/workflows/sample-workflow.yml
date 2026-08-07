@@ -41,7 +41,7 @@ jobs:
           summary: 'false'             # report action writes the job summary
           additional_cli_options: |
             --target-url https://echo.free.beeceptor.com
-            --hook-name souvik_hook,test-souvik
+            --hook-names souvik_hook,test-souvik
 
       - name: Report step
         uses: Traceableai/ast-action/report@v2/overrides-01
