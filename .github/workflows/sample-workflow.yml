@@ -14,8 +14,10 @@
 name: Traceable AST
 
 on:
-  pull_request:
+  push:
     branches: [v2/overrides-01]
+  pull_request:
+    branches: [main]
 
 jobs:
   # ---------------------------------------------------------------------------
