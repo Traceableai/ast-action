@@ -1,132 +1,164 @@
 ## Overview
-In the cloud-native world, API security is an important concern as most microservices are exposed externally to users and to other internal services via APIs. Traceable AST complements the API Catalog in using the DNA to build intelligently targeted scans for detecting vulnerabilities at the API layer. It also helps close the loop of exploits found in production by running security scans in pre-prod environments. It helps in finding vulnerabilities in the early stages of SDLC, giving developers and Product security engineers more time and context to prioritize mitigation of vulnerabilities and build secure APIs. 
 
-Traceable’s GitHub action can be used to continuously test your software builds for active vulnerabilities and get comprehensive reports which will help in deciding if a build should pass or not based on new or existing vulnerabilities exposed by the new code. It runs AST scans on triggers and maps scan results which include a list of vulnerabilities with severities based on CVSS and CWE scores to help categorize issues correctly and get a comprehensive understanding of risks added by new code added in the relevant builds. 
+Traceable AST (Active Security Testing) continuously tests your APIs for vulnerabilities. This GitHub Action provides a streamlined way to run AST scans, generate reports, and gate pipelines based on scan results.
 
-## What does Traceable xAST Github action provide?
-- Extensive security testing coverage for microservices and APIs.
-- Generate tests from live functional traffic for targeted security testing based on actual payloads
-- Insertion into DevSecOps with Scan initiation and Vulnerability Management from scan findings.
-- Inserts security seamlessly into existing functional tests in the same pipeline with full automation. 
-- Risk-based prioritization using asset inventory, threat intel, and predictive modeling.
-- Make a decision around passing or failing the build based on security issues introduced in it. 
+## Actions
 
-## Getting started with Traceable AST action
-### Understanding the inputs
+v2 provides four dedicated actions — each with minimal inputs and an `additional_cli_options` escape hatch for advanced CLI flags.
 
-| **Input**                       | **Description**                                                               |
-|---------------------------------|-------------------------------------------------------------------------------|
-| step\_name                      | Scan action: init/ run/ init and run/ stop.                                   |
-| scan\_name                      | Name of the scan                                                              |
-| client\_scan\_token             | Access token from platform                                                    |
-| cli\_version                    | Version of CLI you want to use for AST. Current one is 1.0.0-rc.3.            |
-| traffic\_env                    | Environment from where AST should observe traffic.                            |
-| plugins                         | List of plugins you want to run the AST scan for.                             |
-| include\_url\_regex             | Include URL patterns to test.                                                 |
-| exclude\_url\_regex             | exclude URL patterns from scan.                                               |
-| target\_url                     | Target URL for the tests.                                                     |
-| traceable\_server               | URL for traceable server, not applicable for SaaS customers.                  |
-| idle\_timeout                   | Scan timeout for a scan when it goes in IDLE state.                           |
-| scan\_timeout                   | Scan timeout in general.                                                      |
-| reference\_env                  | Reference environment from where AST should pick up the API specs.            |
-| max\_retries                    | Max retries for the scan after failure.                                       |
-| scan\_suite                     | AST suite name as defined on the Traceable.ai platform.                       |
-| graphql\_schema\_ids            | Comma separated GraphQl schema IDs uploaded on Traceable.ai platform.         |
-| graphql\_schema\_files          | Comma separated GraphQl SDL file paths.                                       |
-| graphql\_introspection\_enabled | Enables extracting the GraphQl Schema by running introspection on target-url. |
+| Action | Path | Description |
+|---|---|---|
+| **scan** | `Traceableai/ast-action/scan@v2` | Run a local scan (`initAndRun`) |
+| **queue-scan** | `Traceableai/ast-action/queue-scan@v2` | Queue a scan on remote runners |
+| **report** | `Traceableai/ast-action/report@v2` | Generate and publish a detailed report |
+| **gate** | `Traceableai/ast-action/gate@v2` | Pass/fail the pipeline based on scan evaluation |
 
+### CLI Binary Management
 
-### Sample GitHub Action workflow
-1. Here are the sample GitHub actions workflows which shows how you can configure the AST GitHub action. 
-```
-name: Test Traceable AST Init Action And Traceable AST Run Action
+The CLI binary is downloaded once per job and reused across all actions:
+- First action to run downloads the CLI to `${GITHUB_WORKSPACE}/traceable`
+- Subsequent actions detect the existing binary and skip the download
+- `cli_version` (default: `latest`) is accepted on every action but only the first action's value takes effect
+
+---
+
+## Inputs
+
+### scan
+
+| Input | Required | Default | Description |
+|---|---|---|---|
+| `scan_name` | no* | — | Name of the scan |
+| `scan_id` | no* | — | ID of the scan config |
+| `client_scan_token` | yes | — | Access token from platform |
+| `traceable_server` | yes | — | Platform URL |
+| `cli_version` | no | `latest` | CLI version |
+| `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
+
+\* At least one of `scan_name` or `scan_id` must be provided.
+
+### queue-scan
+
+| Input | Required | Default | Description |
+|---|---|---|---|
+| `scan_name` | no* | — | Name of the scan |
+| `scan_id` | no* | — | ID of the scan config |
+| `client_scan_token` | yes | — | Access token from platform |
+| `traceable_server` | yes | — | Platform URL |
+| `cli_version` | no | `latest` | CLI version |
+| `runner_ids` | no | — | Comma-separated runner IDs (defaults to `any_runner`) |
+| `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
+
+\* At least one of `scan_name` or `scan_id` must be provided.
+
+### report
+
+| Input | Required | Default | Description |
+|---|---|---|---|
+| `id` | no | — | Scan run ID (if omitted, auto-resolved from `.traceable` folder) |
+| `client_scan_token` | yes | — | Access token from platform |
+| `traceable_server` | yes | — | Platform URL |
+| `cli_version` | no | `latest` | CLI version |
+| `output_format` | no | `md` | Report format |
+| `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
+
+### gate
+
+| Input | Required | Default | Description |
+|---|---|---|---|
+| `id` | no | — | Scan run ID (if omitted, auto-resolved from `.traceable` folder) |
+| `client_scan_token` | yes | — | Access token from platform |
+| `traceable_server` | yes | — | Platform URL |
+| `cli_version` | no | `latest` | CLI version |
+| `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
+
+> **Note:** Any file paths passed via `additional_cli_options` should be relative to the repository root, since that's the working directory on the runner.
+
+---
+
+## Usage Examples
+
+### Local scan with report and gate
+
+```yaml
+name: Traceable AST Scan
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
 jobs:
-  AstScan:
-    runs-on: ubuntu-20.04
+  ast-scan:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Init scan action
-        uses: Traceableai/ast-action@main
+        uses: actions/checkout@v4
+
+      - name: Run AST scan
+        uses: Traceableai/ast-action/scan@v2
         with:
-          step_name: 'init'
+          scan_name: 'my-scan'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-          traffic_env: 'crapi-demo-1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER }}
-      - name: Run a loop as functional test (This is sample)
-        run: |
-          for ((i=1;i<=100;i++)); 
-          do 
-             echo $i
-          done
-      - name: Run scan action
-        uses: Traceableai/ast-action@main
+
+      - name: Publish report
+        uses: Traceableai/ast-action/report@v2
         with:
-          step_name: 'run'
           client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
-          traffic_env: 'crapi-demo-1'
-          cli_version: 'latest'
-      
-      - name: Stop Scan
-        if: always()
-        uses: Traceableai/ast-action@main
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+
+      - name: Gate pipeline
+        uses: Traceableai/ast-action/gate@v2
         with:
-          step_name: 'stop'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          traffic_env: 'crapi-demo1'
-          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
 ```
 
-```
-name: Test Traceable AST Init And Run Action
+### Queued scan with remote runners
+
+```yaml
+name: Traceable AST Queued Scan
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
 jobs:
-  InitAndRunAstScan:
-    runs-on: ubuntu-20.04
+  ast-scan:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Init and run scan action
-        uses: Traceableai/ast-action@main
-        with:
-          step_name: 'init and run'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          cli_version: 'latest'
-          traffic_env: 'crapi-demo1'
-          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-      - name: Stop Scan
-        if: always()
-        uses: Traceableai/ast-action@main
-        with:
-          step_name: 'stop'
-          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN_DEMO }}
-          traffic_env: 'crapi-demo1'
-          traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
-          
-  functionalTest: // (This is a sample functional test that runs in parallel to scans)
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Run a loop as functional test
-        run: |
-          for ((i=1;i<=100;i++)); 
-          do 
-             echo $i
-          done
+        uses: actions/checkout@v4
 
+      - name: Queue AST scan
+        uses: Traceableai/ast-action/queue-scan@v2
+        with:
+          scan_name: 'my-scan'
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+          runner_ids: 'runner-1,runner-2'
+
+      - name: Publish report
+        uses: Traceableai/ast-action/report@v2
+        with:
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+
+      - name: Gate pipeline
+        uses: Traceableai/ast-action/gate@v2
+        with:
+          client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+          traceable_server: ${{ secrets.TRACEABLE_SERVER }}
 ```
-2. As you can see in the above workflow, we have initiated the scan with initiate scan action step which takes client_scan_token, traffic_env, and traceable_server as input. 
-3. In the next step we are executing functional tests and then running the scan in the step after that which take client_scan_token,traffic_env, and cli_version as input. 
 
+### Using additional CLI options
 
-
+```yaml
+- name: Run AST scan with advanced flags
+  uses: Traceableai/ast-action/scan@v2
+  with:
+    scan_name: 'my-scan'
+    client_scan_token: ${{ secrets.CLIENT_SCAN_TOKEN }}
+    traceable_server: ${{ secrets.TRACEABLE_SERVER }}
+    additional_cli_options: '--idle-timeout 15 --scan-timeout 600 --target-url https://api.example.com'
+```
