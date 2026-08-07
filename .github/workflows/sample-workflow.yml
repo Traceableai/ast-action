@@ -39,7 +39,7 @@ jobs:
           traceable_server: 'api-dev.traceable.ai'
           cli_version: '2.8.0-rc.0'
           summary: 'false'             # report action writes the job summary
-          additional_cli_options: '--target-url https://api.example.com'
+          additional_cli_options: '--target-url https://echo.free.beeceptor.com'
 
       - name: Report step
         uses: Traceableai/ast-action/report@v2/overrides-01
@@ -73,7 +73,7 @@ jobs:
           cli_version: '2.8.0-rc.0'
           wait: 'true'                       # block until the remote scan finishes
           summary: 'false'                   # report action writes the job summary
-          additional_cli_options: '--target-url https://api.example.com'
+          additional_cli_options: '--target-url https://echo.free.beeceptor.com'
 
       - name: Publish report
         uses: Traceableai/ast-action/report@v2/overrides-01
