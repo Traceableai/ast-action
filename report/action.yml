@@ -64,10 +64,20 @@ runs:
 
         CLI_OPTS=$(echo "${{ inputs.additional_cli_options }}" | tr '\n' ' ')
 
-        ${GITHUB_WORKSPACE}/traceable ast scan report \
-          --token ${{ inputs.client_scan_token }} \
-          --traceable-server ${{ inputs.traceable_server }} \
-          --output-format ${{ inputs.output_format }} \
-          ${ID_FLAG} \
-          ${CLI_OPTS} >> $GITHUB_STEP_SUMMARY
+        if [ "${{ inputs.output_format }}" = "md" ]; then
+          ${GITHUB_WORKSPACE}/traceable ast scan report \
+            --token ${{ inputs.client_scan_token }} \
+            --traceable-server ${{ inputs.traceable_server }} \
+            --output-format md \
+            ${ID_FLAG} \
+            ${CLI_OPTS} >> $GITHUB_STEP_SUMMARY
+        else
+          ${GITHUB_WORKSPACE}/traceable ast scan report \
+            --token ${{ inputs.client_scan_token }} \
+            --traceable-server ${{ inputs.traceable_server }} \
+            --output-format ${{ inputs.output_format }} \
+            --output-file "report_output.${{ inputs.output_format }}" \
+            ${ID_FLAG} \
+            ${CLI_OPTS}
+        fi
       shell: bash
