@@ -1,0 +1,88 @@
+---
+name: Traceable Code Scan
+description: "Discover APIs from source via `traceable code apis`"
+branding:
+  icon: 'search'
+  color: 'red'
+inputs:
+  code_path:
+    required: false
+    description: 'Path to source code (relative to repository root)'
+    default: '.'
+  code_languages:
+    required: false
+    description: 'Comma-separated languages (java, python, javascript, csharp). Omit to auto-detect.'
+    default: ''
+  memory_limit:
+    required: false
+    description: 'Percentage of available memory for Joern (1-100). CLI default is 80.'
+    default: ''
+  client_scan_token:
+    required: true
+    description: 'Access token from platform'
+  traceable_server:
+    required: true
+    description: 'Platform URL'
+  additional_cli_options:
+    required: false
+    description: 'Freeform string appended to CLI command for advanced flags'
+    default: ''
+runs:
+  using: composite
+  steps:
+    - name: Require Docker
+      run: |
+        if ! command -v docker >/dev/null 2>&1; then
+          echo "::error::Docker is required for code-scan. Use a GitHub-hosted runner, or install Docker on the self-hosted runner."
+          exit 1
+        fi
+      shell: bash
+    - name: Run code apis
+      run: |
+        export LC_ALL=en_US.utf-8
+        export LANG=en_US.utf-8
+
+        IMAGE="traceableai/traceable-cli:latest"
+
+        CODE_PATH="${{ inputs.code_path }}"
+        if [ -z "$CODE_PATH" ]; then
+          CODE_PATH="."
+        fi
+        if [ ! -d "$CODE_PATH" ]; then
+          echo "::error::code_path is not a directory: $CODE_PATH"
+          exit 1
+        fi
+        ABS_CODE_PATH="$(cd "$CODE_PATH" && pwd)"
+
+        LANG_FLAGS=""
+        if [ -n "${{ inputs.code_languages }}" ]; then
+          IFS=',' read -ra LANGS <<< "${{ inputs.code_languages }}"
+          for lang in "${LANGS[@]}"; do
+            lang="$(echo "$lang" | xargs)"
+            if [ -n "$lang" ]; then
+              LANG_FLAGS="${LANG_FLAGS} --code-language ${lang}"
+            fi
+          done
+        fi
+
+        MEMORY_FLAG=""
+        if [ -n "${{ inputs.memory_limit }}" ]; then
+          MEMORY_FLAG="--memory-limit ${{ inputs.memory_limit }}"
+        fi
+
+        CLI_OPTS=$(echo "${{ inputs.additional_cli_options }}" | tr '\n' ' ')
+
+        docker pull "$IMAGE"
+
+        docker run --rm \
+          -v "${ABS_CODE_PATH}:/target" \
+          -w /target \
+          "$IMAGE" \
+          code apis \
+            --code-path /target \
+            --token ${{ inputs.client_scan_token }} \
+            --traceable-server ${{ inputs.traceable_server }} \
+            ${LANG_FLAGS} \
+            ${MEMORY_FLAG} \
+            ${CLI_OPTS}
+      shell: bash
