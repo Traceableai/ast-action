@@ -25,10 +25,11 @@ jobs:
           python3 -c "
           import http.server, socketserver
           class Echo(http.server.BaseHTTPRequestHandler):
-              def do_GET(self):
+              def _respond(self):
                   self.send_response(200)
                   self.end_headers()
                   self.wfile.write(b'OK')
+              do_GET = do_POST = do_PUT = do_DELETE = do_PATCH = do_HEAD = do_OPTIONS = _respond
               def log_message(self, *a): pass
           with socketserver.TCPServer(('', $PORT), Echo) as httpd:
               httpd.serve_forever()
