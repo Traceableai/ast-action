@@ -41,7 +41,7 @@ jobs:
         with:
           scan_name: 'souvik-demo-scan'
           client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
-          traceable_server: 'api-dev.traceable.ai'
+          traceable_server: 'api.traceable.ai'
           summary: 'false'             # report action writes the job summary
           additional_cli_options: |
             --openapi-spec-files ./specs/spec_a_users.json
@@ -51,13 +51,13 @@ jobs:
         uses: Traceableai/ast-action/report@v2
         with:
           client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
-          traceable_server: 'api-dev.traceable.ai'
+          traceable_server: 'api.traceable.ai'
 
       - name: Gate step
         uses: Traceableai/ast-action/gate@v2
         with:
           client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
-          traceable_server: 'api-dev.traceable.ai'
+          traceable_server: 'api.traceable.ai'
 
       - name: Stop echo server
         if: always()
