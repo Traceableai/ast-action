@@ -23,16 +23,16 @@ jobs:
           PORT=$(shuf -i 3000-9000 -n 1)
           echo "ECHO_PORT=$PORT" >> $GITHUB_ENV
           python3 -c "
-import http.server, socketserver
-class Echo(http.server.BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b'OK')
-    def log_message(self, *a): pass
-with socketserver.TCPServer(('', $PORT), Echo) as httpd:
-    httpd.serve_forever()
-" &
+          import http.server, socketserver
+          class Echo(http.server.BaseHTTPRequestHandler):
+              def do_GET(self):
+                  self.send_response(200)
+                  self.end_headers()
+                  self.wfile.write(b'OK')
+              def log_message(self, *a): pass
+          with socketserver.TCPServer(('', $PORT), Echo) as httpd:
+              httpd.serve_forever()
+          " &
           echo "ECHO_SERVER_PID=$!" >> $GITHUB_ENV
           sleep 1
 
