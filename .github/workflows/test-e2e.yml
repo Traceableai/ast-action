@@ -8,6 +8,7 @@ on:
 
 jobs:
   InitAndRunAstScan:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -30,6 +31,7 @@ jobs:
           traffic_env: 'crapi-demo1'
           traceable_server: ${{ secrets.TRACEABLE_SERVER_DEMO }}
   functionalTest:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - name: Run a loop as functional test

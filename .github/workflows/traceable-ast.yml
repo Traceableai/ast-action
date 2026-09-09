@@ -1,0 +1,63 @@
+name: Traceable AST
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Pattern 1 – Local scan
+  # The scan runs directly on the GitHub-hosted runner.
+  # ---------------------------------------------------------------------------
+  local-scan:
+    name: Local AST Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Start echo server
+        run: |
+          PORT=$(shuf -i 3000-9000 -n 1)
+          echo "ECHO_PORT=$PORT" >> $GITHUB_ENV
+          python3 -c "
+          import http.server, socketserver
+          class Echo(http.server.BaseHTTPRequestHandler):
+              def _respond(self):
+                  self.send_response(200)
+                  self.end_headers()
+                  self.wfile.write(b'OK')
+              do_GET = do_POST = do_PUT = do_DELETE = do_PATCH = do_HEAD = do_OPTIONS = _respond
+              def log_message(self, *a): pass
+          with socketserver.TCPServer(('', $PORT), Echo) as httpd:
+              httpd.serve_forever()
+          " &
+          echo "ECHO_SERVER_PID=$!" >> $GITHUB_ENV
+          sleep 1
+
+      - name: Scan step
+        uses: Traceableai/ast-action/scan@v2
+        with:
+          scan_name: 'souvik-demo-scan'
+          client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
+          traceable_server: 'api.traceable.ai'
+          summary: 'false'             # report action writes the job summary
+          additional_cli_options: |
+            --openapi-spec-files ./specs/spec_a_users.json
+            --target-url http://localhost:${{ env.ECHO_PORT }}
+
+      - name: Report step
+        uses: Traceableai/ast-action/report@v2
+        with:
+          client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
+          traceable_server: 'api.traceable.ai'
+
+      - name: Gate step
+        uses: Traceableai/ast-action/gate@v2
+        with:
+          client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
+          traceable_server: 'api.traceable.ai'
+
+      - name: Stop echo server
+        if: always()
+        run: kill ${{ env.ECHO_SERVER_PID }} || true
