@@ -16,25 +16,47 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Start echo server
+        run: |
+          PORT=$(shuf -i 3000-9000 -n 1)
+          echo "ECHO_PORT=$PORT" >> $GITHUB_ENV
+          python3 -c "
+import http.server, socketserver
+class Echo(http.server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b'OK')
+    def log_message(self, *a): pass
+with socketserver.TCPServer(('', $PORT), Echo) as httpd:
+    httpd.serve_forever()
+" &
+          echo "ECHO_SERVER_PID=$!" >> $GITHUB_ENV
+          sleep 1
+
       - name: Scan step
-        uses: Traceableai/ast-action/scan@v2/test-01
+        uses: Traceableai/ast-action/scan@v2
         with:
-          scan_name: 'souvik-dast-overrides'
-          client_scan_token: 'MWMwMGI2MzItOWZkNC00ZGMwLTk0MDgtNWFlZjEzOGJlNjFk'
+          scan_name: 'souvik-demo-scan'
+          client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
           traceable_server: 'api-dev.traceable.ai'
-          cli_version: '2.8.0-rc.0'
           summary: 'false'             # report action writes the job summary
           additional_cli_options: |
-            --target-url https://echo.free.beeceptor.com
+            --openapi-spec-files ./specs/spec_a_users.json
+            --target-url http://localhost:${{ env.ECHO_PORT }}
 
       - name: Report step
-        uses: Traceableai/ast-action/report@v2/test-01
+        uses: Traceableai/ast-action/report@v2
         with:
-          client_scan_token: 'MWMwMGI2MzItOWZkNC00ZGMwLTk0MDgtNWFlZjEzOGJlNjFk'
+          client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
           traceable_server: 'api-dev.traceable.ai'
 
       - name: Gate step
-        uses: Traceableai/ast-action/gate@v2/test-01
+        uses: Traceableai/ast-action/gate@v2
         with:
-          client_scan_token: 'MWMwMGI2MzItOWZkNC00ZGMwLTk0MDgtNWFlZjEzOGJlNjFk'
+          client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
           traceable_server: 'api-dev.traceable.ai'
+
+      - name: Stop echo server
+        if: always()
+        run: kill ${{ env.ECHO_SERVER_PID }} || true
