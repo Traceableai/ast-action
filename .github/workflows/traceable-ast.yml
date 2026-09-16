@@ -51,7 +51,15 @@ jobs:
         with:
           client_scan_token: 'ZjNhNDM4NzEtZGNjYy00NzM2LTgzYjItZTg1YmU1MjdkYmRh'
           traceable_server: 'api.traceable.ai'
-
+          output_format: sarif
+          additional_cli_options: --output-file results.sarif
+      
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v4
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: results.sarif
+      
       - name: Gate step
         uses: Traceableai/ast-action/gate@v2
         with:
