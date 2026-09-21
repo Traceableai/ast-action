@@ -53,7 +53,7 @@ jobs:
           client_scan_token: 'traceable_sat_ZTQxNjBlNzEtMThmNC00N2FjLTgyZWQtM2JmZDQ0M2RiNWEy'
           traceable_server: 'api-dev.traceable.ai'
           output_format: 'sarif'
-          additional_cli_options: '--output-file results.sarif'
+          additional_cli_options: '--output-file results.sarif --report-level detailed'
 
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v4
