@@ -49,7 +49,7 @@ jobs:
       - name: Report step
         uses: Traceableai/ast-action/report@v2
         with:
-          id: '878f5709-51a2-4e2c-8f51-0bc235398aec'
+          id: 'f5b702f0-08b5-4f60-aa28-91cc959e1d13'
           client_scan_token: 'traceable_sat_ZTQxNjBlNzEtMThmNC00N2FjLTgyZWQtM2JmZDQ0M2RiNWEy'
           traceable_server: 'api-dev.traceable.ai'
           output_format: 'sarif'
