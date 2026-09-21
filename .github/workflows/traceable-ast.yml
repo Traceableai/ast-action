@@ -55,6 +55,9 @@ jobs:
           output_format: 'sarif'
           additional_cli_options: '--output-file results.sarif --report-level detailed'
 
+      - name: Print SARIF report
+        run: cat results.sarif
+
       - name: Upload SARIF file
         uses: github/codeql-action/upload-sarif@v4
         with:
