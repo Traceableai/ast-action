@@ -20,7 +20,7 @@ The CLI binary is downloaded once per job and reused across all actions:
 - First action to run downloads the CLI to `${GITHUB_WORKSPACE}/traceable`
 - Subsequent actions detect the existing binary and skip the download
 - `cli_version` (default: `latest`) is accepted on every action but only the first action's value takes effect
-- **code-scan** does not use the CLI binary — it runs `traceableai/traceable-cli:latest` (Joern is bundled there)
+- **code-scan** does not use the CLI binary — it runs the `traceableai/traceable-cli:<cli_version>` image (Joern is bundled there)
 
 ---
 
@@ -37,6 +37,7 @@ Requires Docker on the runner (GitHub-hosted runners have it). Runs `traceableai
 | `memory_limit` | no | — | Percentage of available memory for Joern (1–100). CLI default is 80 |
 | `client_scan_token` | yes | — | Access token from platform |
 | `traceable_server` | yes | — | Platform URL |
+| `cli_version` | no | `latest` | `traceableai/traceable-cli` image tag |
 | `additional_cli_options` | no | `''` | Extra CLI flags appended to the command |
 
 ### scan

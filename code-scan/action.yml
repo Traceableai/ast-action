@@ -23,6 +23,10 @@ inputs:
   traceable_server:
     required: true
     description: 'Platform URL'
+  cli_version:
+    required: false
+    description: 'traceableai/traceable-cli image tag'
+    default: 'latest'
   additional_cli_options:
     required: false
     description: 'Freeform string appended to CLI command for advanced flags'
@@ -42,7 +46,8 @@ runs:
         export LC_ALL=en_US.utf-8
         export LANG=en_US.utf-8
 
-        IMAGE="traceableai/traceable-cli:latest"
+        CLI_VERSION="${{ inputs.cli_version }}"
+        IMAGE="traceableai/traceable-cli:${CLI_VERSION:-latest}"
 
         CODE_PATH="${{ inputs.code_path }}"
         if [ -z "$CODE_PATH" ]; then
