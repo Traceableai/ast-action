@@ -52,7 +52,16 @@ runs:
           echo "::error::code_path is not a directory: $CODE_PATH"
           exit 1
         fi
+        WORKSPACE="$(cd "${GITHUB_WORKSPACE}" && pwd)"
         ABS_CODE_PATH="$(cd "$CODE_PATH" && pwd)"
+        case "$ABS_CODE_PATH/" in
+          "$WORKSPACE"/*) ;;
+          *)
+            echo "::error::code_path must be inside the workspace: $CODE_PATH"
+            exit 1
+            ;;
+        esac
+        CONTAINER_CODE_PATH="/target${ABS_CODE_PATH#"$WORKSPACE"}"
 
         LANG_FLAGS=""
         if [ -n "${{ inputs.code_languages }}" ]; then
@@ -75,11 +84,11 @@ runs:
         docker pull "$IMAGE"
 
         docker run --rm \
-          -v "${ABS_CODE_PATH}:/target" \
+          -v "${WORKSPACE}:/target" \
           -w /target \
           "$IMAGE" \
           code apis \
-            --code-path /target \
+            --code-path "$CONTAINER_CODE_PATH" \
             --token ${{ inputs.client_scan_token }} \
             --traceable-server ${{ inputs.traceable_server }} \
             ${LANG_FLAGS} \
